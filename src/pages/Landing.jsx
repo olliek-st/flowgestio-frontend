@@ -28,33 +28,33 @@ export default function Landing() {
     <div className="min-h-screen bg-white text-slate-900">
       {/* Nav */}
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b">
-        <Container className="flex h-14 items-center justify-between">
-          <Link to="/" className="font-semibold tracking-tight flex items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-primary text-white">
-              FG
-            </span>
-            FlowGestio
-          </Link>
+  <Container className="flex h-14 items-center justify-between">
+    <Link to="/" className="font-semibold tracking-tight flex items-center gap-2">
+      {/* Logo image from /public/logo.svg */}
+      <img src="/logo.svg" alt="FlowGestio logo" className="h-14 w-auto object-contain" />
+    </Link>
 
-          <nav className="flex items-center gap-3">
-            <Link to="/login" className="px-3 py-1.5 rounded-md hover:bg-gray-100">
-              Sign In
-            </Link>
-            <button
-              className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 font-medium text-white shadow hover:bg-blue-700"
-              onClick={() => {
-                track("beta_join_click", { placement: "nav" });
-                setShowRequest(true);
-              }}
-            >
-              Join Beta
-            </button>
-          </nav>
-        </Container>
+    <nav className="flex items-center gap-3">
+      <Link to="/login" className="px-3 py-1.5 rounded-md hover:bg-gray-100">
+        Sign In
+      </Link>
+      <button
+        className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 font-medium text-white shadow hover:bg-blue-700"
+        onClick={() => {
+          track("beta_join_click", { placement: "nav" });
+          setShowRequest(true);
+        }}
+      >
+        Join Beta
+      </button>
+    </nav>
+  </Container>
 
-        {/* High-contrast banner under nav */}
-        <BetaBanner onJoin={() => setShowRequest(true)} />
-      </header>
+  {/* High-contrast banner under nav */}
+  <BetaBanner onJoin={() => setShowRequest(true)} />
+</header>
+
+
 
       {/* Hero */}
       <section className="relative">
