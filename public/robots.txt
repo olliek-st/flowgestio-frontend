@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://app.flowgestio.com/sitemap.xml
