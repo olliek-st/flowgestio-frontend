@@ -1,3 +1,4 @@
+// src/components/wizard/StepProject.jsx
 import React, { useState } from "react";
 import { Input, TextArea } from "./fields";
 import { AiBar } from "./AiBar";
@@ -61,20 +62,63 @@ export function StepProject({ data, setData, dateError }) {
           <span className="text-sm text-slate-700">Project purpose (brief)</span>
           <AiBar
             busy={busy}
-            onDraft={() => runSuggest({ intent: "draft", section: "charter.projectPurpose", inputs: projectInputs, style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 }, constraints: { maxWords: 120 } })}
-            onImprove={() => runSuggest({ intent: "rewrite", section: "charter.projectPurpose", inputs: { currentPurpose: data.projectPurpose }, style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 }, constraints: { maxWords: 120 } })}
-            onConcise={() => runSuggest({ intent: "rewrite", section: "charter.projectPurpose", inputs: { currentPurpose: data.projectPurpose }, style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.2 }, constraints: { maxWords: 90 } })}
-            onLonger={() => runSuggest({ intent: "rewrite", section: "charter.projectPurpose", inputs: { currentPurpose: data.projectPurpose }, style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 }, constraints: { maxWords: 160 } })}
-            onFormal={() => runSuggest({ intent: "rewrite", section: "charter.projectPurpose", inputs: { currentPurpose: data.projectPurpose }, style: { tone: "formal", readingLevel: "C1", region: "EN-CA", temperature: 0.3 }, constraints: { maxWords: 120 } })}
+            onDraft={() => runSuggest({
+              intent: "draft",
+              section: "charter.projectPurpose",
+              inputs: projectInputs,
+              style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 },
+              constraints: { maxWords: 120 },
+            })}
+            onImprove={() => runSuggest({
+              intent: "rewrite",
+              section: "charter.projectPurpose",
+              inputs: { currentPurpose: data.projectPurpose },
+              style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 },
+              constraints: { maxWords: 120 },
+            })}
+            onConcise={() => runSuggest({
+              intent: "rewrite",
+              section: "charter.projectPurpose",
+              inputs: { currentPurpose: data.projectPurpose },
+              style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.2 },
+              constraints: { maxWords: 90 },
+            })}
+            onLonger={() => runSuggest({
+              intent: "rewrite",
+              section: "charter.projectPurpose",
+              inputs: { currentPurpose: data.projectPurpose },
+              style: { tone: "professional", readingLevel: "B2", region: "EN-CA", temperature: 0.3 },
+              constraints: { maxWords: 160 },
+            })}
+            onFormal={() => runSuggest({
+              intent: "rewrite",
+              section: "charter.projectPurpose",
+              inputs: { currentPurpose: data.projectPurpose },
+              style: { tone: "formal", readingLevel: "C1", region: "EN-CA", temperature: 0.3 },
+              constraints: { maxWords: 120 },
+            })}
           />
         </div>
+
         <TextArea label="" value={data.projectPurpose || ""} onChange={v => setData(d => ({ ...d, projectPurpose: v }))} />
+
         {busy && <p className="text-sm text-slate-500">Generating…</p>}
         {error && <p className="text-sm text-red-600">{error}</p>}
-        {suggestion && <DiffView original={data.projectPurpose || ""} proposed={suggestion.text} onAccept={onAccept} onReject={() => setSuggestion(null)} />}
+
+        {suggestion && (
+          <DiffView
+            original={data.projectPurpose || ""}
+            proposed={suggestion.text}
+            onAccept={onAccept}
+            onReject={() => setSuggestion(null)}
+          />
+        )}
+
         {data.projectPurpose_ai && (
           <p className="text-xs text-slate-500">
-            AI provenance: {data.projectPurpose_ai.model} · {new Date(data.projectPurpose_ai.createdAt).toLocaleString()} · prompt {String(data.projectPurpose_ai.promptHash || "").slice(0,8)}…
+            AI provenance: {data.projectPurpose_ai.model} ·{" "}
+            {new Date(data.projectPurpose_ai.createdAt).toLocaleString()} · prompt{" "}
+            {String(data.projectPurpose_ai.promptHash || "").slice(0, 8)}…
           </p>
         )}
       </div>
