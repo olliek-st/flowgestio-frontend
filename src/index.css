@@ -16,3 +16,47 @@
 section#newsletter {
     padding-top: 0;
 }
+/* ===== Print Styles for FlowGestio Demo ===== */
+@page {
+  size: A4;           /* Change to 'Letter' if your market prefers */
+  margin: 20mm;
+}
+
+@media print {
+  /* Ensure colors come through */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Hide controls / navigation */
+  .no-print { display: none !important; }
+
+  /* Reset root container for full-page output */
+  #root { padding: 0 !important; }
+
+  /* Core document container */
+  #charter-doc {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* Headings: prevent orphaned titles at bottom of page */
+  h1, h2, h3 { break-after: avoid-page; }
+
+  /* Paragraphs & lists: readable spacing */
+  p, li { line-height: 1.35; }
+
+  /* Tables: keep headers on each printed page */
+  table {
+    break-inside: auto;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr, td, th { break-inside: avoid; }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+
+  /* Utility class: force section to new page */
+  .break-before-page { break-before: page; }
+}

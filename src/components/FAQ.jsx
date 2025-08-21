@@ -1,4 +1,4 @@
-// src/Components/FAQ.jsx
+// src/components/FAQ.jsx
 const faqs = [
   { q: "Is there a free plan?", a: "Yes—FlowGestio is free during beta. After beta, a freemium plan will allow up to 2 projects." },
   { q: "Are templates PMI-aligned?", a: "Yes. Templates are designed to align with PMBOK® concepts." },

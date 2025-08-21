@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { track } from "../lib/analytics";
-import BetaBanner from "../Components/BetaBanner";
+import BetaBanner from "../components/BetaBanner";
 import { FileText, Sparkles, ShieldCheck } from "lucide-react";
-import HowItWorks from "../Components/HowItWorks";
-import Testimonials from "../Components/Testimonials";
-import EmailCapture from "../Components/EmailCapture";
-import FAQ from "../Components/FAQ";
-import RequestAccessModal from "../Components/RequestAccessModal";
+import HowItWorks from "../components/HowItWorks";
+import Testimonials from "../components/Testimonials";
+import EmailCapture from "../components/EmailCapture";
+import FAQ from "../components/FAQ";
+import RequestAccessModal from "../components/RequestAccessModal";
 
 const IS_BETA =
   import.meta.env.VITE_BETA === "1" || import.meta.env.VITE_MAINTENANCE === "1";
@@ -88,14 +88,11 @@ export default function Landing() {
                 Join Beta
               </button>
 
-              <a
-                className="inline-flex items-center gap-2 rounded-2xl border border-subtle px-5 py-3 font-medium text-slate-800 shadow-sm hover:bg-gray-50"
-                href="/sample-output.pdf"
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => track("sample_output_view")}
-              >
-                View Sample Output
+              <a href="/sample" className="rounded-2xl border px-5 py-3 hover:bg-slate-50">
+               View Sample Output
+              </a>
+			  <a href="/wizard" className="rounded-2xl border px-5 py-3 hover:bg-slate-50">
+               Try the Wizard (demo)
               </a>
             </div>
 

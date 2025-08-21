@@ -1,4 +1,4 @@
-// src/Components/Testimonials.jsx
+// src/components/Testimonials.jsx
 
 const quotes = [
   {
