@@ -59,6 +59,7 @@ export function StepProject({ data, setData, dateError }) {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
+		<div className="text-xs text-amber-700">DEBUG: AI section should appear here</div>
           <span className="text-sm text-slate-700">Project purpose (brief)</span>
           <AiBar
             busy={busy}
