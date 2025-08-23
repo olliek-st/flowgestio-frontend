@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeadMeta from "../components/HeadMeta.jsx";
 
-// Build a robust endpoint:
-// - Use VITE_API_BASE if provided (trim trailing slash)
-// - Otherwise fall back to a same-origin function (/api/waitlist)
-const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
-const WAITLIST_ENDPOINT = API_BASE ? `${API_BASE}/beta/request` : "/api/waitlist";
+// Force same-origin on previews; allow external API only in non-preview builds
+const isPreview =
+  typeof window !== "undefined" && /-git-/.test(window.location.hostname);
+const API_BASE = isPreview
+  ? ""
+  : (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
+const WAITLIST_ENDPOINT = API_BASE
+  ? `${API_BASE}/beta/request`
+  : "/api/waitlist";
 
 export default function ComingSoon() {
   const [name, setName] = useState("");
@@ -16,6 +20,7 @@ export default function ComingSoon() {
   const navigate = useNavigate();
 
   const isValidEmail = (v) => /\S+@\S+\.\S+/.test(v);
+  const looksLikeHTML = (s) => /<\s*[a-z][\s\S]*>/i.test(s || "");
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -35,21 +40,27 @@ export default function ComingSoon() {
 
     setLoading(true);
     try {
-      // Helpful log during preview/testing
       console.log("Waitlist endpoint →", WAITLIST_ENDPOINT);
+
+      // Send cookies on same-origin (needed for Vercel Deployment Protection)
+      const sameOrigin =
+        WAITLIST_ENDPOINT.startsWith("/") ||
+        (typeof window !== "undefined" &&
+          WAITLIST_ENDPOINT.startsWith(window.location.origin));
 
       const res = await fetch(WAITLIST_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Avoid cookie/CORS headaches for this public POST
-        credentials: "omit",
+        credentials: sameOrigin ? "same-origin" : "omit",
         body: JSON.stringify({ name: nm, email: em }),
       });
 
-      // Treat 409 (already subscribed) as success
+      // Treat 409 as success (“already subscribed”)
       if (!res.ok && res.status !== 409) {
         const t = await res.text().catch(() => "");
-        throw new Error(t || `Request failed (${res.status})`);
+        // Don’t dump HTML error pages in the UI
+        const safe = looksLikeHTML(t) ? "" : t;
+        throw new Error(safe || `Request failed (${res.status})`);
       }
 
       setStatus({
@@ -63,10 +74,8 @@ export default function ComingSoon() {
       setName("");
       setEmail("");
 
-      // Friendly pause then redirect
       setTimeout(() => navigate("/wizard"), 1000);
     } catch (err) {
-      // Network/CORS or server thrown error
       setStatus({
         type: "error",
         msg: err?.message || "Something went wrong. Please try again.",
@@ -101,12 +110,7 @@ export default function ComingSoon() {
           pre-launch list to get early access.
         </p>
 
-        <form
-          onSubmit={onSubmit}
-          className="mt-6 space-y-3"
-          noValidate
-          aria-busy={loading ? "true" : "false"}
-        >
+        <form onSubmit={onSubmit} className="mt-6 space-y-3" noValidate>
           <label className="block text-sm">
             <span className="text-slate-700">Name *</span>
             <input
