@@ -1,25 +1,32 @@
-// src/main.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import "./index.css";
+
 import Landing from "./pages/Landing.jsx";
 import Demo from "./pages/Demo.jsx";
-// If you created these pages, keep the imports & routes below.
-// If not, delete the imports and their route entries.
+import Wizard from "./pages/Wizard.jsx";
+import ComingSoon from "./pages/ComingSoon.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
-// src/main.jsx (or App.jsx)
+
 import { initAnalytics } from "./lib/analytics";
 initAnalytics();
-import Wizard from "./pages/Wizard.jsx";
+
+const COMING_SOON = import.meta.env.VITE_COMING_SOON === "1";
+
 const router = createBrowserRouter([
-  { path: "/", element: <Landing /> },
+  COMING_SOON
+    ? { path: "/", element: <Navigate to="/coming-soon" replace /> }
+    : { path: "/", element: <Landing /> },
+
+  { path: "/coming-soon", element: <ComingSoon /> },
   { path: "/demo", element: <Wizard /> },
   { path: "/wizard", element: <Wizard /> },
   { path: "/sample", element: <Demo /> },
-  { path: "/login", element: <Login /> },   // remove if you don't have this file yet
-  { path: "/signup", element: <Signup /> }, // remove if you don't have this file yet
+  { path: "/login", element: <Login /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "*", element: <Navigate to={COMING_SOON ? "/coming-soon" : "/"} replace /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
