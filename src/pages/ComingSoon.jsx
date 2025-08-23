@@ -139,16 +139,13 @@ export default function ComingSoon() {
           </label>
 
           {status.msg && (
-            <div
-              className={`text-sm ${
-                status.type === "error" ? "text-red-600" : "text-green-700"
-              }`}
-              role={status.type === "error" ? "alert" : "status"}
-              aria-live="polite"
-            >
-              {status.msg}
-            </div>
-          )}
+  <div
+    className={status.type === "error" ? "text-sm text-red-600" : "text-sm text-green-700"}
+    role={status.type === "error" ? "alert" : "status"}
+  >
+    {status.msg}
+  </div>
+)}
 
           <button
             type="submit"
