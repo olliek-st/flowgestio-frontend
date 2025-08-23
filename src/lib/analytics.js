@@ -1,20 +1,38 @@
-import posthog from "posthog-js";
-
+// src/lib/analytics.js
 export function initAnalytics() {
-  if (import.meta.env.PROD && !window.__PH_INITIALIZED__) {
-    posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-      api_host: import.meta.env.VITE_POSTHOG_HOST,
-      capture_pageview: true,
-      persistence: "localStorage",
+  try {
+    if (!import.meta.env.PROD) return;
+    if (window.__PH_INITIALIZED__) return;
+
+    const key  = import.meta.env.VITE_POSTHOG_KEY;
+    const host = import.meta.env.VITE_POSTHOG_HOST || "https://us.i.posthog.com";
+
+    if (!key || /your_key_here/i.test(String(key))) {
+      console.info("[analytics] PostHog disabled (no key)");
+      return;
+    }
+
+    import("posthog-js").then(({ default: posthog }) => {
+      posthog.init(key, {
+        api_host: host,
+        autocapture: false,
+        capture_pageview: true,
+        persistence: "localStorage",
+      });
+      window.posthog = posthog;
+      window.__PH_INITIALIZED__ = true;
+    }).catch((e) => {
+      console.warn("[analytics] init failed:", e);
     });
-    window.__PH_INITIALIZED__ = true;
+  } catch (e) {
+    console.warn("[analytics] disabled:", e);
   }
 }
 
 export function track(event, properties) {
-  try { posthog.capture(event, properties); } catch {}
+  try { window.posthog?.capture?.(event, properties); } catch {}
 }
 
 export function identify(userId, props) {
-  try { posthog.identify(userId, props); } catch {}
+  try { window.posthog?.identify?.(userId, props); } catch {}
 }
