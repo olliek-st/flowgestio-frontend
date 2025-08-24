@@ -129,32 +129,31 @@ export default function Landing() {
 
       {/* Benefits (title-less visually, accessible H2) */}
       <section id="benefits" aria-labelledby="benefits-title" className="py-16">
-        <Container>
-          <h2 id="benefits-title" className="sr-only">Benefits</h2>
-
-          <div className="grid gap-8 sm:grid-cols-3">
-            <Feature
-              icon={<FileText />}
-              title="Complete Documentation"
-              text="Generate Charter, Scope Baseline, Schedule Baseline, Cost Baseline—and all PMI subsidiary plans when needed."
-            />
-            <Feature
-              icon={<Sparkles />}
-              title="Intelligent Guidance"
-              text="Tailored recommendations from best practices and your project context. Skip irrelevant sections with smart defaults."
-            />
-            <Feature
-              icon={<ShieldCheck />}
-              title="Professional Export"
-              text={
-                IS_BETA
-                  ? "Export polished PDFs or Word files ready for stakeholders. Watermarks are disabled during beta."
-                  : "Export polished PDFs or Word files ready for stakeholders."
-              }
-            />
-          </div>
-        </Container>
-      </section>
+  <Container>
+    <h2 id="benefits-title" className="sr-only">Benefits</h2>
+    <div className="grid gap-8 sm:grid-cols-3">
+      <Feature
+        icon={<FileText />}
+        title="Complete Documentation"
+        text="Generate Charter, Scope Baseline, Schedule Baseline, Cost Baseline—and all PMI subsidiary plans when needed."
+      />
+      <Feature
+        icon={<Sparkles />}
+        title="Intelligent Guidance"
+        text="Tailored recommendations from best practices and your project context. Skip irrelevant sections with smart defaults."
+      />
+      <Feature
+        icon={<ShieldCheck />}
+        title="Professional Export"
+        text={
+          IS_BETA
+            ? "Export polished PDFs or Word files ready for stakeholders. Watermarks are disabled during beta."
+            : "Export polished PDFs or Word files ready for stakeholders."
+        }
+      />
+    </div>
+  </Container>
+</section>
 	  
 	 {/* Footer */}
       <footer className="border-t">
@@ -184,10 +183,12 @@ export default function Landing() {
 function Feature({ icon, title, text }) {
   return (
     <div className="rounded-xl bg-white p-6 shadow-card border border-subtle">
-      <div className="mb-3 inline-flex rounded-md bg-primary/10 p-2 text-primary">
-        {icon}
+      <div className="flex items-center gap-3 mb-3">
+        <div className="inline-flex rounded-md bg-primary/10 p-2 text-primary">
+          {icon}
+        </div>
+        <h3 className="text-lg font-semibold">{title}</h3>
       </div>
-      <h3 className="text-lg font-semibold">{title}</h3>
       <p className="mt-2 text-sm text-secondary">{text}</p>
     </div>
   );
