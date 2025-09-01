@@ -1,6 +1,9 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/" }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
+  "redirects": [
+    { "source": "/wizard", "destination": "/coming-soon", "permanent": false },
+    { "source": "/demo", "destination": "/coming-soon", "permanent": false }
   ]
 }
