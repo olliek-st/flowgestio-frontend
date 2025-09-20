@@ -84,7 +84,7 @@ export default function Landing() {
             {/* Coming Soon Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4" />
-              Launching December 2024
+              Launching December 2025
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight mb-6">
@@ -92,12 +92,12 @@ export default function Landing() {
               <span className="bg-gradient-to-r from-[#3B82F6] to-[#6366F1] bg-clip-text text-transparent">
                 Ready-to-Submit
               </span>{" "}
-              Business Cases
+              Project Documents
             </h1>
 
             <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
-              Building the fastest way to generate complete, ready-to-submit PMI business cases with AI assistance. 
-              No templates - get finished documents ready for approval boards.
+              Building the fastest way to generate complete, ready-to-submit project management documents that are PMI-standard compliant. 
+              Starting with business cases and project charters - get finished documents ready for approval boards.
             </p>
 
             {/* Email Signup */}
@@ -163,13 +163,13 @@ export default function Landing() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <Feature
               icon={<FileText />}
-              title="Complete Business Cases"
-              text="Generate finished documents ready for submission to stakeholders and approval boards."
+              title="Complete Documents"
+              text="Generate finished business cases and project charters ready for submission to stakeholders and approval boards."
             />
             <Feature
               icon={<ShieldCheck />}
-              title="PMI-Standard Documents"
-              text="Outputs follow industry standards with proper formatting and required sections."
+              title="PMI-Standard Compliant"
+              text="Project management documents that follow PMI standards with proper formatting and required sections."
             />
             <Feature
               icon={<Brain />}
@@ -180,48 +180,6 @@ export default function Landing() {
               icon={<Sparkles />}
               title="Board-Ready Export"
               text="Download polished PDFs and Word documents ready for immediate submission."
-            />
-          </div>
-        </Container>
-      </section>
-
-      {/* Why the Wait */}
-      <section className="py-16">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Why December?</h2>
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-8">
-              <p className="text-lg text-slate-700 mb-4">
-                FlowGestio is being built with focus and attention to detail. Rather than rush a half-working product, 
-                we're taking the time to build it properly.
-              </p>
-              <p className="text-slate-600">
-                Launching in December means you get a polished, fully-functional business case generator 
-                that actually delivers on its promises - complete, ready-to-submit documents.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Early Feedback Preview */}
-      <section className="py-16 bg-slate-50">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">What early testers say</h2>
-            <p className="text-slate-600">Real feedback from beta access users</p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-            <Testimonial
-              quote="I built a full Charter in under 25 minutes. The QA flags were clutch."
-              author="Lena K."
-              role="PMO Analyst"
-            />
-            <Testimonial
-              quote="The exports look board-ready."
-              author="Hassan O."
-              role="Startup Founder"
             />
           </div>
         </Container>
