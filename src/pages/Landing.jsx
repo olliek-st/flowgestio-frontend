@@ -153,37 +153,38 @@ export default function Landing() {
 
       {/* What to Expect */}
       <section className="py-16 bg-slate-50">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">What to expect:</h2>
-            <p className="text-lg text-slate-600">Complete business case generation, not empty templates</p>
-          </div>
+  <Container>
+    <div className="text-center mb-12">
+      <h2 className="text-3xl font-bold mb-4">What to expect:</h2>
+      <p className="text-lg text-slate-600">
+        Complete PMI-compliant project management documents — not empty templates
+      </p>
+    </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <Feature
-              icon={<FileText />}
-              title="Complete Documents"
-              text="Generate finished business cases and project charters ready for submission to stakeholders and approval boards."
-            />
-            <Feature
-              icon={<ShieldCheck />}
-              title="PMI-Standard Compliant"
-              text="Project management documents that follow PMI standards with proper formatting and required sections."
-            />
-            <Feature
-              icon={<Brain />}
-              title="AI Content Generation"
-              text="Context-aware AI writes the actual content, not just empty templates."
-            />
-            <Feature
-              icon={<Sparkles />}
-              title="Board-Ready Export"
-              text="Download polished PDFs and Word documents ready for immediate submission."
-            />
-          </div>
-        </Container>
-      </section>
-
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <Feature
+        icon={<FileText />}
+        title="Complete Documents"
+        text="Start with Business Cases and Project Charters today — with the full planning phase (risk, scope, schedule, stakeholder, and more) coming soon."
+      />
+      <Feature
+        icon={<ShieldCheck />}
+        title="PMI-Compliant"
+        text="Documents structured to PMI standards with proper formatting, required sections, and alignment to the PMBOK® Guide."
+      />
+      <Feature
+        icon={<Brain />}
+        title="AI-Powered Content"
+        text="Context-aware AI generates polished content for every section — far beyond fill-in-the-blank templates."
+      />
+      <Feature
+        icon={<Sparkles />}
+        title="Board-Ready Export"
+        text="Instantly export polished PDFs and Word files — ready to share with sponsors, stakeholders, and approval boards."
+      />
+    </div>
+  </Container>
+</section>
       {/* Footer */}
       <footer className="border-t">
         <Container className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
