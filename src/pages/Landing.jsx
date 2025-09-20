@@ -96,8 +96,7 @@ export default function Landing() {
             </h1>
 
             <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
-              Building the fastest way to generate complete, ready-to-submit project management documents that are PMI-standard compliant. 
-              Starting with business cases and project charters - get finished documents ready for approval boards.
+              The fastest way to generate PMI-compliant project management documents. Starting with Business Cases and Project Charters, and soon create the entire planning phase — from the Schedule Management Plan to the Stakeholder Engagement Plan — all ready for approval boards.
             </p>
 
             {/* Email Signup */}
