@@ -84,7 +84,7 @@ export default function Landing() {
             {/* Coming Soon Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4" />
-              Launching December 2025
+              Coming Soon
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight mb-6">
