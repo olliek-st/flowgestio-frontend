@@ -175,5 +175,8 @@ export const DEFAULT_BC_P1: BusinessCaseStep3_P1 = {
     "Complete stakeholder analysis",
     "Refine financial estimates",
     "Develop detailed implementation plan"
-  ]
+  ],
+
+  // Required by BusinessCaseStep3_P1 (z.array(...).default([]) is required in z.infer output)
+  complianceChecks: []
 };

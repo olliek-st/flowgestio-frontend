@@ -1,160 +1,182 @@
-import React from "react";
+// src/components/wizard/steps/Step4Export.jsx
+import React, { useState, useMemo, useRef } from "react";
 import { exportService } from "../../../services/exportService";
 import { validateBusinessCase as _validate } from "../../../services/validation";
 
-/** Optional adapter in case your validator's shape differs */
+/* -----------------------------------------------------
+   Input adapters & normalization
+----------------------------------------------------- */
+
+function pickBuiltDocAndMetaProps(props) {
+  // Accepts multiple shapes: {doc}, {data.builtDoc}, or {data}
+  const builtDoc = props.doc || props.data?.builtDoc || props.data || null;
+  const analyzedModel = props.data?.analyzedModel || null;
+  const docType = props.data?.docType || "business-case";
+  return { builtDoc, analyzedModel, docType };
+}
+
+function normalizeSections(sections) {
+  if (!Array.isArray(sections)) return [];
+  return sections.map((s, idx) => {
+    const content_md = (s.content_md ?? s.content ?? "").toString();
+    return {
+      id: s.id || `sec_${idx + 1}`,
+      title: (s.title || "").trim() || `Section ${idx + 1}`,
+      content_md,           // keep markdown explicitly
+      content: content_md,  // maintain backward-compat with callers using `content`
+    };
+  });
+}
+
+
+function toValidationShape(builtDoc) {
+  if (!builtDoc) return { meta: { title: "" }, sections: [] };
+
+  const title = (builtDoc.meta?.title || builtDoc.title || "").trim();
+  const sections = normalizeSections(builtDoc.sections);
+
+  return {
+    ...builtDoc,
+    title: title || builtDoc.title || "",
+    meta: { ...(builtDoc.meta || {}), title },
+    sections,
+  };
+}
+
+function enhancedPreflightChecks(doc) {
+  const errs = [];
+  const warns = [];
+
+  const title = (doc.meta?.title || "").trim();
+  if (!title) errs.push("Document title is required for export.");
+
+  const nonEmptySections = (doc.sections || []).filter((s) => (s.content || "").trim());
+  if (nonEmptySections.length === 0) errs.push("At least one section with content is required.");
+
+  return { errs, warns };
+}
+
 function normalizeValidation(result) {
-  if (!result) return { ok: false, errors: ["Unknown validation result"], warnings: [] };
-  // Accept either {ok, errors, warnings} or {errors, warnings} with ok inferred
+  if (!result) return { ok: false, errors: ["Validation service unavailable."], warnings: [] };
   const errors = Array.isArray(result.errors) ? result.errors : [];
   const warnings = Array.isArray(result.warnings) ? result.warnings : [];
   const ok = typeof result.ok === "boolean" ? result.ok : errors.length === 0;
   return { ok, errors, warnings };
 }
 
-export default function Step4Export({
-  // UPDATED: Handle new data structure from Step 3
-  data, // This now contains: { analyzedModel?, builtDoc, docType }
-  onBack,
-}) {
-  // Extract the document for validation and export
-  const builtDoc = data?.builtDoc || data; // Fallback for legacy data structure
-  const analyzedModel = data?.analyzedModel; // P1 model with _calc objects
-  const docType = data?.docType;
+/* -----------------------------------------------------
+   Component
+----------------------------------------------------- */
 
-  const { ok, errors, warnings } = normalizeValidation(_validate(builtDoc));
+export default function Step4Export(props) {
+  const { builtDoc: rawBuiltDoc, analyzedModel, docType } = pickBuiltDocAndMetaProps(props);
+  const builtDoc = toValidationShape(rawBuiltDoc);
+
+  const validation = useMemo(() => {
+    const { errs, warns } = enhancedPreflightChecks(builtDoc);
+    const serviceValidation = normalizeValidation(_validate(builtDoc));
+    const errors = [...errs, ...serviceValidation.errors];
+    const warnings = [...warns, ...serviceValidation.warnings];
+    const ok = errors.length === 0;
+    return { ok, errors, warnings };
+  }, [builtDoc]);
+
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
+  const abortRef = useRef(null);
 
   async function onExport(fmt) {
-    if (!ok) {
-      alert("Fix these before export:\n" + errors.join("\n"));
+    if (exporting) return; // guard
+    setExportError("");
+
+    if (!validation.ok) {
+      const msg =
+        "Please resolve the following issues before exporting:\n\n" + validation.errors.join("\n");
+      alert(msg);
       return;
     }
-    try {
-      // For business cases, pass both the document AND the analyzed model
-      // This gives exportService access to financial calculations if needed
-      const exportData = docType === "business-case" && analyzedModel 
-        ? { document: builtDoc, analyzedModel, docType }
-        : builtDoc;
 
-      const { url, filename, warnings: exportWarnings } = await exportService.exportDocument(
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      setExporting(true);
+
+      const exportData =
+        docType === "business-case" && analyzedModel
+          ? { document: builtDoc, analyzedModel, docType }
+          : builtDoc;
+
+      // The export service may return { url, filename } OR { blob, filename }.
+      const result = await exportService.exportDocument(
         exportData,
         {
-          format: fmt,               // "pdf" | "docx" | "html" | "txt" | "json"
+          format: fmt,
           citationStyle: "APA7",
           includeMetadata: true,
-          includeDiagnostics: false, // flip on when debugging
-          verifyCitations: false,    // set true after verifyAll() is real
-        }
+          includeDiagnostics: false,
+          verifyCitations: false,
+        },
+        { signal: controller.signal } // allow service to pass through AbortSignal if it supports it
       );
+
+      const filename =
+        (result && result.filename) ||
+        `${(builtDoc.meta?.title || "document").replace(/[^\w\d-_]+/g, "_")}.${fmt}`;
+
+      let objectUrl = null;
+
+      if (result?.blob instanceof Blob) {
+        objectUrl = URL.createObjectURL(result.blob);
+      }
+
+      const href = objectUrl || result?.url;
+      if (!href) throw new Error("Export failed: no file URL returned.");
+
       const a = document.createElement("a");
-      a.href = url;
+      a.href = href;
       a.download = filename;
+      a.rel = "noopener";
+      a.style.display = "none";
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
 
-      if (exportWarnings?.length) {
-        // non-blocking: show in console or toast
-        console.warn("Export warnings:", exportWarnings);
-      }
+      // Revoke object URL if we created one
+      setTimeout(() => {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+      }, 150);
     } catch (e) {
-      console.error(e);
+      if (e?.name === "AbortError") return; // silently ignore cancel
+      console.error("Export error:", e);
+      setExportError(e?.message || "Unknown export error.");
       alert("Export failed: " + (e?.message || "Unknown error"));
+    } finally {
+      setExporting(false);
+      abortRef.current = null;
     }
   }
 
-  // Show financial metrics if we have the analyzed model
-  const showFinancialSummary = () => {
-    if (docType !== "business-case" || !analyzedModel?.options) return null;
-    
-    const proposedOption = analyzedModel.options.find(o => !o.isBaseline);
-    const calc = proposedOption?._calc;
-    
-    if (!calc) return null;
-    
-    return (
-      <div className="rounded-xl border border-green-200 bg-green-50 p-4">
-        <div className="font-semibold mb-2 text-green-800">Financial Analysis Summary</div>
-        <div className="text-sm text-green-700 space-y-1">
-          {calc.roiPct !== undefined && (
-            <div><span className="font-medium">ROI:</span> {calc.roiPct.toFixed(1)}%</div>
-          )}
-          {calc.npv !== undefined && (
-            <div><span className="font-medium">NPV:</span> {calc.currency || '$'}{calc.npv.toLocaleString()}</div>
-          )}
-          {calc.paybackMonths !== undefined && (
-            <div><span className="font-medium">Payback:</span> {calc.paybackMonths} months</div>
-          )}
-          {calc.mirrPct !== undefined && (
-            <div><span className="font-medium">MIRR:</span> {calc.mirrPct.toFixed(1)}%</div>
-          )}
-          <div><span className="font-medium">Analysis Period:</span> {calc.horizonMonths} months</div>
-        </div>
-      </div>
-    );
-  };
+  function cancelExport() {
+    try {
+      abortRef.current?.abort();
+    } catch {}
+  }
 
-  // Show validation insights from the analyzed model
-  const showValidationInsights = () => {
-    if (docType !== "business-case" || !analyzedModel) return null;
-    
-    const insights = [];
-    
-    // Check if we have proper baseline vs proposed comparison
-    const baseline = analyzedModel.options?.find(o => o.isBaseline);
-    const proposed = analyzedModel.options?.find(o => !o.isBaseline);
-    
-    if (baseline && proposed) {
-      const baselineCalc = baseline._calc;
-      const proposedCalc = proposed._calc;
-      
-      if (baselineCalc && proposedCalc) {
-        const netBenefit = (proposedCalc.npv || 0) - (baselineCalc.npv || 0);
-        if (netBenefit > 0) {
-          insights.push(`Net benefit over baseline: ${analyzedModel.financial?.currency || '$'}${netBenefit.toLocaleString()}`);
-        }
-      }
-    }
-    
-    // Check risk coverage
-    const riskCount = analyzedModel.projectRisks?.length || 0;
-    if (riskCount > 0) {
-      insights.push(`${riskCount} project risks identified and assessed`);
-    }
-    
-    // Check KPI coverage
-    const kpiCount = analyzedModel.strategic?.successKPIs?.length || 0;
-    if (kpiCount > 0) {
-      insights.push(`${kpiCount} success KPIs defined`);
-    }
-    
-    if (insights.length === 0) return null;
-    
-    return (
-      <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
-        <div className="font-semibold mb-2 text-blue-800">Analysis Insights</div>
-        <ul className="text-sm text-blue-700 space-y-1">
-          {insights.map((insight, i) => (
-            <li key={i}>• {insight}</li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
+  const titleForDisplay = builtDoc?.meta?.title || builtDoc?.title || "Untitled Document";
 
   return (
     <div className="space-y-6">
       <header className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold">Step 4 — Review & Export</h2>
+          <h2 className="text-xl font-semibold">Step 4 — Review &amp; Export</h2>
           <p className="text-sm text-slate-600">
-            Review your {docType === "business-case" ? "business case" : "document"}, fix any blocking issues, then export in your preferred format.
+            Review your {docType === "business-case" ? "business case" : "document"}, fix any issues, then export.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={onBack}
+            onClick={props.onBack}
             className="px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
           >
             Back
@@ -162,142 +184,110 @@ export default function Step4Export({
         </div>
       </header>
 
-      {/* Errors (blocking) */}
-      {!ok && (
+      {/* Validation Errors */}
+      {!validation.ok && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-red-800">
           <div className="font-semibold mb-2 flex items-center gap-2">
-            <span className="text-red-500">⚠</span>
-            Please fix before export:
+            <span className="text-red-500" aria-hidden>⚠</span>
+            Please resolve these issues before export:
           </div>
           <ul className="list-disc ml-5 text-sm space-y-1">
-            {errors.map((e, i) => (
+            {validation.errors.map((e, i) => (
               <li key={i}>{e}</li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* Warnings (non-blocking) */}
-      {warnings?.length > 0 && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-amber-800">
-          <div className="font-semibold mb-2 flex items-center gap-2">
-            <span className="text-amber-500">💡</span>
-            Suggestions for improvement:
-          </div>
-          <ul className="list-disc ml-5 text-sm space-y-1">
-            {warnings.map((w, i) => (
-              <li key={i}>{w}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Financial Summary (for business cases) */}
-      {showFinancialSummary()}
-
-      {/* Validation Insights */}
-      {showValidationInsights()}
-
-      {/* Export buttons */}
+      {/* Export Options */}
       <div className="rounded-xl border p-4 bg-white">
         <div className="font-semibold mb-2">Export Options</div>
-        <div className="text-sm text-slate-600 mb-3">
-          {ok ? "Your document is ready to export in multiple formats." : "Export will be enabled once errors are resolved."}
+        <div className="text-sm text-slate-600 mb-4">
+          {validation.ok
+            ? exporting
+              ? "Preparing your file…"
+              : "Your document is ready to export in multiple formats."
+            : "Export will be enabled once all errors are resolved."}
         </div>
+
         <div className="flex flex-wrap gap-2">
           {[
             { fmt: "pdf", label: "PDF", desc: "Best for sharing and presentations" },
             { fmt: "docx", label: "Word", desc: "Editable Microsoft Word document" },
             { fmt: "html", label: "HTML", desc: "Web page format" },
             { fmt: "txt", label: "Text", desc: "Plain text format" },
-            { fmt: "json", label: "JSON", desc: "Structured data format" }
+            { fmt: "json", label: "JSON", desc: "Structured data format" },
           ].map(({ fmt, label, desc }) => (
             <button
               key={fmt}
               onClick={() => onExport(fmt)}
-              disabled={!ok}
-              className="px-4 py-2 rounded-lg bg-slate-800 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-700 transition-colors text-sm font-medium"
-              title={!ok ? "Resolve errors to enable export" : desc}
+              disabled={!validation.ok || exporting}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                !validation.ok || exporting
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-slate-800 text-white hover:bg-slate-700"
+              }`}
+              title={!validation.ok ? "Resolve errors to enable export" : desc}
             >
-              {label}
+              {exporting ? "Exporting…" : label}
             </button>
           ))}
+
+          {exporting && (
+            <button
+              onClick={cancelExport}
+              className="px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-slate-800 hover:bg-gray-300"
+              title="Cancel in-progress export"
+            >
+              Cancel
+            </button>
+          )}
         </div>
+
+        {!!exportError && (
+          <div className="mt-3 rounded-md bg-red-50 border border-red-200 text-red-700 px-3 py-2 text-sm" role="alert">
+            {exportError}
+          </div>
+        )}
       </div>
 
-      {/* Document preview */}
+      {/* Document Preview */}
       <div className="rounded-xl border p-4 bg-slate-50">
         <div className="font-semibold mb-3">Document Preview</div>
-        
-        {/* Document metadata */}
-        <div className="text-xs text-slate-600 mb-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div>
-            <span className="font-medium">Title:</span>
-            <div className="mt-1">{builtDoc?.meta?.title || builtDoc?.title || "Untitled"}</div>
-          </div>
-          <div>
-            <span className="font-medium">Type:</span>
-            <div className="mt-1 capitalize">{docType?.replace('-', ' ') || "Document"}</div>
-          </div>
-          <div>
-            <span className="font-medium">Sections:</span>
-            <div className="mt-1">{builtDoc?.sections?.length || 0}</div>
-          </div>
-          <div>
-            <span className="font-medium">Status:</span>
-            <div className="mt-1">
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                ok ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
-                {ok ? 'Ready' : 'Has Issues'}
-              </span>
-            </div>
-          </div>
+        <div className="text-xs text-slate-600 mb-4">
+          <strong>Title:</strong> {titleForDisplay}
         </div>
-        
-        {/* Document content preview */}
-        {builtDoc?.sections && (
+
+        {Array.isArray(builtDoc?.sections) && builtDoc.sections.length > 0 && (
           <div className="mt-4">
             <div className="text-sm font-medium mb-2">Content Preview</div>
             <div className="max-h-96 overflow-y-auto border rounded-lg bg-white p-3">
               <div className="text-sm">
-                <h4 className="font-semibold mb-3 text-lg">
-                  {builtDoc.title || builtDoc.meta?.title || "Document"}
-                </h4>
-                {builtDoc.sections.map((section, i) => (
-                  <div key={i} className="mb-4 pb-3 border-b border-slate-100 last:border-b-0">
-                    <div className="font-medium text-slate-900 mb-2">{section.title}</div>
-                    <div className="text-slate-700 text-sm leading-relaxed">
-                      {section.content?.length > 300 
-                        ? `${section.content.substring(0, 300)}...` 
-                        : section.content || "No content"}
+                <h4 className="font-semibold mb-3 text-lg">{titleForDisplay}</h4>
+                {builtDoc.sections.map((section, i) => {
+                  const text = (section.content || "").toString();
+                  const snippet =
+                    text.length > 600 ? text.slice(0, 600).replace(/\s+\S*$/, "") + "…" : text || "No content";
+                  return (
+                    <div key={section.id || i} className="mb-4 pb-3 border-b border-slate-100 last:border-b-0">
+                      <div className="font-medium text-slate-900 mb-2">{section.title}</div>
+                      <div className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{snippet}</div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
         )}
 
-        {/* Additional metadata for business cases */}
-        {docType === "business-case" && analyzedModel && (
-          <div className="mt-4 pt-3 border-t">
-            <div className="text-xs text-slate-500">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div>
-                  <span className="font-medium">Project Type:</span>
-                  <div className="mt-1 capitalize">{analyzedModel.projectType?.replace('_', ' ')}</div>
-                </div>
-                <div>
-                  <span className="font-medium">Analysis Period:</span>
-                  <div className="mt-1">{analyzedModel.financial?.horizonMonths} months</div>
-                </div>
-                <div>
-                  <span className="font-medium">Currency:</span>
-                  <div className="mt-1">{analyzedModel.financial?.currency}</div>
-                </div>
-              </div>
-            </div>
+        {validation.warnings?.length > 0 && (
+          <div className="mt-4 rounded-md bg-yellow-50 border border-yellow-200 text-yellow-800 px-3 py-2 text-sm">
+            <div className="font-medium mb-1">Warnings</div>
+            <ul className="list-disc ml-5">
+              {validation.warnings.map((w, i) => (
+                <li key={i}>{w}</li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

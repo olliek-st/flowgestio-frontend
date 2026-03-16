@@ -1,0 +1,38 @@
+[
+  { "id": "PRESET.HEALTH.CLINIC", "industry": "HEALTH", "subsector": "CLINIC", "activeDomains": ["PRIVACY", "SECURITY", "QUALITY_REG"] },
+  { "id": "PRESET.HEALTH.PHARMA", "industry": "HEALTH", "subsector": "PHARMA", "activeDomains": ["PRIVACY", "QUALITY_REG", "SAFETY_HSE"] },
+  { "id": "PRESET.HEALTH.CLINICAL_RESEARCH", "industry": "HEALTH", "subsector": "CLINICAL_RESEARCH", "activeDomains": ["PRIVACY", "QUALITY_REG"] },
+  { "id": "PRESET.HEALTH.MEDICAL_DEVICES", "industry": "HEALTH", "subsector": "MEDICAL_DEVICES", "activeDomains": ["QUALITY_REG", "SAFETY_HSE", "PRIVACY"] },
+
+  { "id": "PRESET.FINTECH.BANKING", "industry": "FINTECH", "subsector": "BANKING", "activeDomains": ["FINANCIAL_REG", "SECURITY", "PRIVACY"] },
+  { "id": "PRESET.FINTECH.BANKING_LENDING", "industry": "FINTECH", "subsector": "BANKING_LENDING", "activeDomains": ["FINANCIAL_REG", "SECURITY", "PRIVACY"] },
+  { "id": "PRESET.FINTECH.PAYMENTS", "industry": "FINTECH", "subsector": "PAYMENTS", "activeDomains": ["FINANCIAL_REG", "SECURITY", "PRIVACY"] },
+  { "id": "PRESET.FINTECH.CRYPTO_DIGITAL_ASSETS", "industry": "FINTECH", "subsector": "CRYPTO_DIGITAL_ASSETS", "activeDomains": ["FINANCIAL_REG", "SECURITY", "PRIVACY"] },
+
+  { "id": "PRESET.PUBLIC.ADMIN_DIGITAL", "industry": "PUBLIC", "subsector": "ADMIN_DIGITAL", "activeDomains": ["ACCESSIBILITY", "PRIVACY", "PUBLIC_PROCUREMENT"] },
+  { "id": "PRESET.PUBLIC.EDUCATION", "industry": "PUBLIC", "subsector": "EDUCATION", "activeDomains": ["PRIVACY", "ACCESSIBILITY"] },
+
+  { "id": "PRESET.CONSTRUCTION.CIVIL_INFRA", "industry": "CONSTRUCTION", "subsector": "CIVIL_INFRA", "activeDomains": ["PUBLIC_PROCUREMENT", "SAFETY_HSE", "ENVIRONMENTAL"] },
+  { "id": "PRESET.CONSTRUCTION.BUILDING", "industry": "CONSTRUCTION", "subsector": "BUILDING", "activeDomains": ["SAFETY_HSE", "ENVIRONMENTAL"] },
+  { "id": "PRESET.CONSTRUCTION.INDUSTRIAL", "industry": "CONSTRUCTION", "subsector": "INDUSTRIAL", "activeDomains": ["SAFETY_HSE", "ENVIRONMENTAL"] },
+
+  { "id": "PRESET.IT.SAAS", "industry": "IT", "subsector": "SAAS", "activeDomains": ["PRIVACY", "SECURITY"] },
+  { "id": "PRESET.IT.SAAS_CLOUD", "industry": "IT", "subsector": "SAAS_CLOUD", "activeDomains": ["PRIVACY", "SECURITY"] },
+  { "id": "PRESET.IT.AI", "industry": "IT", "subsector": "AI", "activeDomains": ["PRIVACY", "SECURITY"] },
+  { "id": "PRESET.IT.CYBERSECURITY", "industry": "IT", "subsector": "CYBERSECURITY", "activeDomains": ["SECURITY", "PRIVACY"] },
+
+  { "id": "PRESET.CLEANTECH.CARBON", "industry": "CLEANTECH", "subsector": "CARBON_CREDITS", "activeDomains": ["ENVIRONMENTAL", "FINANCIAL_REG", "PUBLIC_PROCUREMENT"] },
+  { "id": "PRESET.CLEANTECH.LIFECYCLE", "industry": "CLEANTECH", "subsector": "LIFECYCLE_PRODUCTS", "activeDomains": ["ENVIRONMENTAL", "QUALITY_REG"] },
+  { "id": "PRESET.CLEANTECH.PUBLIC_FUNDING", "industry": "CLEANTECH", "subsector": "PUBLIC_FUNDING", "activeDomains": ["PUBLIC_PROCUREMENT", "FINANCIAL_REG", "ENVIRONMENTAL"] },
+  { "id": "PRESET.CLEANTECH.RENEWABLE_ENERGY", "industry": "CLEANTECH", "subsector": "RENEWABLE_ENERGY", "activeDomains": ["ENVIRONMENTAL", "SAFETY_HSE", "PUBLIC_PROCUREMENT"] },
+  { "id": "PRESET.CLEANTECH.WASTE_WATER", "industry": "CLEANTECH", "subsector": "WASTE_WATER", "activeDomains": ["ENVIRONMENTAL", "SAFETY_HSE", "PUBLIC_PROCUREMENT"] },
+
+  { "id": "PRESET.MANUFACTURING.AUTO", "industry": "MANUFACTURING", "subsector": "AUTOMOTIVE", "activeDomains": ["QUALITY_REG", "SAFETY_HSE"] },
+  { "id": "PRESET.MANUFACTURING.AEROSPACE", "industry": "MANUFACTURING", "subsector": "AEROSPACE", "activeDomains": ["QUALITY_REG", "SAFETY_HSE", "SECURITY"] },
+
+  { "id": "PRESET.CHEMICALS.HAZMAT", "industry": "CHEMICALS", "subsector": "HAZMAT", "activeDomains": ["SAFETY_HSE", "ENVIRONMENTAL", "QUALITY_REG"] },
+
+  { "id": "PRESET.EDUCATION.DIGITAL", "industry": "EDUCATION", "subsector": "DIGITAL_SERVICES", "activeDomains": ["PRIVACY", "ACCESSIBILITY", "SECURITY"] },
+
+  { "id": "PRESET.DEFENSE.ITAR_EAR", "industry": "DEFENSE", "subsector": "EXPORT_CONTROLLED", "activeDomains": ["EXPORT_CONTROL", "SECURITY"] }
+]

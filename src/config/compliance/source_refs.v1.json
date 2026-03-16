@@ -1,0 +1,45 @@
+[
+  {"id":"SRC.PIPEDA","name":"PIPEDA","jurisdiction":["CA"],"authority":"Government of Canada","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.LOI25","name":"Loi 25 (Québec)","jurisdiction":["CA-QC"],"authority":"Gouvernement du Québec","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.HIPAA","name":"HIPAA","jurisdiction":["US"],"authority":"U.S. HHS","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.PCI_DSS","name":"PCI DSS","jurisdiction":["GLOBAL"],"authority":"PCI SSC","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.PSD2","name":"PSD2 / SCA","jurisdiction":["EU"],"authority":"European Union","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.OSFI","name":"OSFI Guidelines","jurisdiction":["CA"],"authority":"OSFI","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.BASEL_III","name":"Basel III","jurisdiction":["GLOBAL"],"authority":"Basel Committee","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.WCAG","name":"WCAG","jurisdiction":["GLOBAL"],"authority":"W3C","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.AODA","name":"AODA","jurisdiction":["CA-ON"],"authority":"Government of Ontario","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.PUBLIC_PROCUREMENT","name":"Public Procurement (generic)","jurisdiction":["CA","US"],"authority":"Public Sector","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.PUBLIC_FUNDING","name":"Public Funding / Grants (generic)","jurisdiction":["CA","US"],"authority":"Public Sector","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.OSHA","name":"OSHA","jurisdiction":["US"],"authority":"U.S. Department of Labor","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.CCOHS","name":"CCOHS","jurisdiction":["CA"],"authority":"Government of Canada","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.EPA","name":"EPA","jurisdiction":["US"],"authority":"U.S. EPA","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.ECCC","name":"Environment and Climate Change Canada","jurisdiction":["CA"],"authority":"Government of Canada","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.SOC2","name":"SOC 2","jurisdiction":["US"],"authority":"AICPA","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.ISO27001","name":"ISO/IEC 27001","jurisdiction":["GLOBAL"],"authority":"ISO/IEC","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.SLA","name":"SLA/Operations (generic)","jurisdiction":["GLOBAL"],"authority":"Industry Practice","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.ISO14064","name":"ISO 14064","jurisdiction":["GLOBAL"],"authority":"ISO","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.GHG_PROTOCOL","name":"GHG Protocol","jurisdiction":["GLOBAL"],"authority":"WRI/WBCSD","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.TCFD","name":"TCFD","jurisdiction":["GLOBAL"],"authority":"TCFD","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.ISO14040","name":"ISO 14040","jurisdiction":["GLOBAL"],"authority":"ISO","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.IATF16949","name":"IATF 16949","jurisdiction":["GLOBAL"],"authority":"IATF","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.AS9100","name":"AS9100","jurisdiction":["GLOBAL"],"authority":"IAQG","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.WHIMIS","name":"WHMIS/SIMDUT","jurisdiction":["CA"],"authority":"Government of Canada","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.REACH","name":"REACH","jurisdiction":["EU"],"authority":"European Union","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.TDG","name":"Transportation of Dangerous Goods (TDG)","jurisdiction":["CA"],"authority":"Transport Canada","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.FERPA","name":"FERPA","jurisdiction":["US"],"authority":"U.S. Department of Education","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.FIPPA","name":"FIPPA (generic)","jurisdiction":["CA"],"authority":"Provincial governments","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+
+  {"id":"SRC.ITAR","name":"ITAR","jurisdiction":["US"],"authority":"U.S. State Department","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.EAR","name":"EAR","jurisdiction":["US"],"authority":"U.S. Department of Commerce","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."},
+  {"id":"SRC.NIST","name":"NIST (Cybersecurity)","jurisdiction":["US"],"authority":"NIST","url":null,"lastReviewed":"2026-01-19","notes":"Placeholder reference."}
+]

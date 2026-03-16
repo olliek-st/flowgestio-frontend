@@ -17,6 +17,8 @@ export type RawPkg = {
   project: { name: string; dates: { start: string; finish: string }; pm?: string; sponsor?: string };
   charter: {
     businessCase?: string;
+    projectPurpose?: string;
+    highLevelRequirements?: string[];
     objectives?: Objective[];
     highLevelScope?: { inclusions?: string[]; exclusions?: string[] };
     successCriteria?: string[];
@@ -25,6 +27,9 @@ export type RawPkg = {
     milestones?: Milestone[];
     initialRisks?: Risk[];
     stakeholders?: Stakeholder[];
+    budgetSummary?: { currency?: string; capex?: number; opex?: number; contingency?: number; total?: number };
+    pmAuthority?: string;
+    approvals?: { sponsorName?: string; sponsorRole?: string; pmName?: string; approvalDate?: string };
   };
 };
 
@@ -32,7 +37,7 @@ export type RawPkg = {
 // Guards — type-aware row validation to avoid empty rows
 // ──────────────────────────────────────────────────────────────────────────────
 const trim = (s?: string) => (s ?? "").trim();
-const hasAny = (arr?: any[]) => Array.isArray(arr) && arr.length > 0;
+const hasAny = (arr?: unknown[]) => Array.isArray(arr) && arr.length > 0;
 
 export const guards = {
   objective: (r?: Objective) => !!r && !!trim(r.text) && !!trim(r.metric) && !!trim(r.target),
@@ -52,6 +57,8 @@ export type ViewModel = {
   header: { name: string; start: string; finish: string; pm?: string; sponsor?: string };
   charter: {
     projectPurpose?: string;
+    /** Business case summary — sourced from RawPkg.charter.businessCase */
+    businessCase?: string;
     objectives: Objective[];
     highLevelRequirements: string[];
     scope: { inclusions: string[]; exclusions: string[] };
@@ -80,22 +87,23 @@ export function buildViewModel(raw: RawPkg): ViewModel {
       sponsor: raw.project.sponsor,
     },
     charter: {
-      projectPurpose: trim((raw as any).charter?.projectPurpose),
-      objectives: filter((raw as any).charter?.objectives, guards.objective),
-      highLevelRequirements: ((raw as any).charter?.highLevelRequirements ?? []).filter((s: string) => !!trim(s)),
+      projectPurpose: trim(raw.charter?.projectPurpose),
+      businessCase: trim(raw.charter?.businessCase),
+      objectives: filter(raw.charter?.objectives, guards.objective),
+      highLevelRequirements: (raw.charter?.highLevelRequirements ?? []).filter((s) => !!trim(s)),
       scope: {
-        inclusions: ((raw as any).charter?.highLevelScope?.inclusions ?? []).filter((s: string) => !!trim(s)),
-        exclusions: ((raw as any).charter?.highLevelScope?.exclusions ?? []).filter((s: string) => !!trim(s)),
+        inclusions: (raw.charter?.highLevelScope?.inclusions ?? []).filter((s) => !!trim(s)),
+        exclusions: (raw.charter?.highLevelScope?.exclusions ?? []).filter((s) => !!trim(s)),
       },
-      successCriteria: ((raw as any).charter?.successCriteria ?? []).filter((s: string) => !!trim(s)),
-      assumptions: ((raw as any).charter?.assumptions ?? []).filter((s: string) => !!trim(s)),
-      constraints: ((raw as any).charter?.constraints ?? []).filter((s: string) => !!trim(s)),
-      milestones: filter((raw as any).charter?.milestones, guards.milestone),
-      risks: filter((raw as any).charter?.initialRisks, guards.risk), // map RAW.initialRisks → VM.risks
-      stakeholders: filter((raw as any).charter?.stakeholders, guards.stakeholder),
-      budgetSummary: (raw as any).charter?.budgetSummary,
-      pmAuthority: trim((raw as any).charter?.pmAuthority),
-      approvals: (raw as any).charter?.approvals,
+      successCriteria: (raw.charter?.successCriteria ?? []).filter((s) => !!trim(s)),
+      assumptions: (raw.charter?.assumptions ?? []).filter((s) => !!trim(s)),
+      constraints: (raw.charter?.constraints ?? []).filter((s) => !!trim(s)),
+      milestones: filter(raw.charter?.milestones, guards.milestone),
+      risks: filter(raw.charter?.initialRisks, guards.risk), // map RAW.initialRisks → VM.risks
+      stakeholders: filter(raw.charter?.stakeholders, guards.stakeholder),
+      budgetSummary: raw.charter?.budgetSummary,
+      pmAuthority: trim(raw.charter?.pmAuthority),
+      approvals: raw.charter?.approvals,
     },
   };
 }

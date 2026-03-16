@@ -43,7 +43,7 @@ describe("ViewModel + prune + number", () => {
       ]
     };
 
-    const { vm, pruned, index } = buildNumbered(raw as any, tree);
+    const { vm, pruned, index } = buildNumbered(raw, tree);
 
     // only 1 objective survived
     expect(vm.charter.objectives.length).toBe(1);

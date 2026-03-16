@@ -1,0 +1,906 @@
+[
+  {
+    "id":"BC01.PRIVACY.S4.001",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"PRIVACY",
+    "severity":"BLOCK",
+    "when":{
+      "any":[
+        {"step1":{"industry":["HEALTH"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["patient","PHI","PII","dossier médical"]}}
+      ]
+    },
+    "require":{
+      "all":[
+        {"containsConcept":{"concept":"data_types_or_sources"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["chiffrement","encryption","journalisation","audit trail"]}}
+      ]
+    },
+    "message":{
+      "title":"Privacy: scope incomplet",
+      "body":"Le scope inclut des données sensibles sans décrire les contrôles minimum (types de données/sources, chiffrement, journalisation)."
+    },
+    "sourceRefs":["SRC.PIPEDA","SRC.LOI25","SRC.HIPAA"]
+  },
+  {
+    "id":"BC01.PRIVACY.CROSS.S5.001",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "all":[
+        {"step1":{"industry":["HEALTH"]}},
+        {"containsAny":{"path":"sections.S4.text","terms":["PHI","PII","patient"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S5.text","terms":["confidentialité","privacy","PIPEDA","Loi 25","HIPAA"]}}
+      ]
+    },
+    "message":{
+      "title":"Privacy: contraintes manquantes",
+      "body":"Le scope inclut des données patients; ajoute les contraintes et exigences de confidentialité."
+    },
+    "sourceRefs":["SRC.PIPEDA","SRC.LOI25"]
+  },
+  {
+    "id":"BC01.PRIVACY.S11.001",
+    "docType":"BC01",
+    "sectionId":"S11",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "all":[
+        {"step1":{"industry":["HEALTH"]}},
+        {"containsAny":{"path":"sections.S4.text","terms":["PHI","PII","patient"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S11.text","terms":["violation","breach","confidentialité","non-conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"Privacy: risque non documenté",
+      "body":"Ajoute un risque de confidentialité (breach, non-conformité) avec mesures d’atténuation."
+    },
+    "sourceRefs":["SRC.PIPEDA"]
+  },
+  {
+    "id":"BC01.PRIVACY.S13.001",
+    "docType":"BC01",
+    "sectionId":"S13",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["HEALTH"]}
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S13.text","terms":["DPO","responsable protection des renseignements"]}}
+      ]
+    },
+    "message":{
+      "title":"Privacy: rôle manquant",
+      "body":"Identifie un responsable de la protection des renseignements personnels (DPO ou équivalent)."
+    },
+    "sourceRefs":["SRC.LOI25"]
+  },
+
+  {
+    "id":"BC01.SECURITY.S5.002",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["FINTECH"],"subsector":["PAYMENTS"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["paiement","carte","e-commerce","POS"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S5.text","terms":["PCI-DSS","PSD2","SCA","3-D Secure"]}}
+      ]
+    },
+    "message":{
+      "title":"Security: contraintes paiement manquantes",
+      "body":"Pour des paiements, mentionne PCI-DSS/PSD2 (ou équivalent)."
+    },
+    "sourceRefs":["SRC.PCI_DSS","SRC.PSD2"]
+  },
+  {
+    "id":"BC01.SECURITY.S7.001",
+    "docType":"BC01",
+    "sectionId":"S7",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["FINTECH"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"incident_response_plan"}},
+        {"containsAny":{"path":"sections.S7.text","terms":["incident response","réponse aux incidents"]}}
+      ]
+    },
+    "message":{
+      "title":"Security: plan de réponse aux incidents manquant",
+      "body":"La solution devrait inclure un plan de réponse aux incidents de sécurité."
+    },
+    "sourceRefs":["SRC.PCI_DSS"]
+  },
+  {
+    "id":"BC01.FINREG.S10.001",
+    "docType":"BC01",
+    "sectionId":"S10",
+    "domain":"FINANCIAL_REG",
+    "severity":"BLOCK",
+    "when":{
+      "step1":{"industry":["FINTECH"],"subsector":["BANKING"]}
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S10.text","terms":["LCR","NSFR","capital","réserves","stress test"]}}
+      ]
+    },
+    "message":{
+      "title":"Finance: métriques réglementaires absentes",
+      "body":"Pour le banking, inclure ratios clés (capital, liquidité, stress tests)."
+    },
+    "sourceRefs":["SRC.OSFI","SRC.BASEL_III"]
+  },
+
+  {
+    "id":"BC01.ACCESSIBILITY.S4.001",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"ACCESSIBILITY",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["PUBLIC"],"subsector":["ADMIN_DIGITAL","EDUCATION"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["service en ligne","portal","citoyen","student","étudiant","usager"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"accessibility_requirements"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["accessibilité","WCAG","AODA","contraste","clavier","ARIA"]}}
+      ]
+    },
+    "message":{
+      "title":"Accessibilité: exigences absentes du scope",
+      "body":"Pour un service public numérique, le scope devrait inclure des exigences d’accessibilité (WCAG/AODA ou équivalent)."
+    },
+    "sourceRefs":["SRC.WCAG","SRC.AODA"]
+  },
+  {
+    "id":"BC01.ACCESSIBILITY.S11.001",
+    "docType":"BC01",
+    "sectionId":"S11",
+    "domain":"ACCESSIBILITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["PUBLIC"]}
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S11.text","terms":["accessibilité","plainte","discrimination","non-conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"Accessibilité: risque non documenté",
+      "body":"Ajoute un risque de non-conformité accessibilité (plaintes, obligations légales) et mesures d’atténuation."
+    },
+    "sourceRefs":["SRC.WCAG"]
+  },
+
+  {
+    "id":"BC01.PUBLICPROC.S6.001",
+    "docType":"BC01",
+    "sectionId":"S6",
+    "domain":"PUBLIC_PROCUREMENT",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["PUBLIC"]}},
+        {"step1":{"industry":["CONSTRUCTION"],"subsector":["CIVIL_INFRA"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"fair_bidding_process"}},
+        {"containsAny":{"path":"sections.S6.text","terms":["appel d'offres","RFP","RFQ","bidding","procurement","critères de sélection"]}}
+      ]
+    },
+    "message":{
+      "title":"Marchés publics: sélection fournisseurs non documentée",
+      "body":"Décris le processus d’appel d’offres / critères de sélection (équité, transparence) ou justifie une exception."
+    },
+    "sourceRefs":["SRC.PUBLIC_PROCUREMENT"]
+  },
+  {
+    "id":"BC01.PUBLICPROC.S14.001",
+    "docType":"BC01",
+    "sectionId":"S14",
+    "domain":"PUBLIC_PROCUREMENT",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["PUBLIC"]}},
+        {"step1":{"industry":["CONSTRUCTION"],"subsector":["CIVIL_INFRA"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"approval_gates"}},
+        {"containsAny":{"path":"sections.S14.text","terms":["approbation","gate","steering committee","comité","sign-off"]}}
+      ]
+    },
+    "message":{
+      "title":"Gouvernance: approbations/gates manquants",
+      "body":"Pour un projet public/infra, précise les gates d’approbation, instances décisionnelles et cadence de revue."
+    },
+    "sourceRefs":["SRC.PUBLIC_PROCUREMENT"]
+  },
+
+  {
+    "id":"BC01.SAFETY.S5.001",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"SAFETY_HSE",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["CONSTRUCTION"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"hse_constraints"}},
+        {"containsAny":{"path":"sections.S5.text","terms":["santé et sécurité","HSE","site safety","lockout","PPE","formation"]}}
+      ]
+    },
+    "message":{
+      "title":"HSE: contraintes Santé & Sécurité absentes",
+      "body":"Ajoute les contraintes HSE (formation, procédures, exigences site) pertinentes au chantier/projet."
+    },
+    "sourceRefs":["SRC.OSHA","SRC.CCOHS"]
+  },
+  {
+    "id":"BC01.SAFETY.S13.001",
+    "docType":"BC01",
+    "sectionId":"S13",
+    "domain":"SAFETY_HSE",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["CONSTRUCTION"]}
+    },
+    "require":{
+      "any":[
+        {"containsAny":{"path":"sections.S13.text","terms":["HSE","SST","responsable santé sécurité","safety officer"]}}
+      ]
+    },
+    "message":{
+      "title":"HSE: rôle manquant",
+      "body":"Identifie un responsable Santé & Sécurité (HSE/SST Officer ou équivalent) dans les parties prenantes."
+    },
+    "sourceRefs":["SRC.CCOHS"]
+  },
+
+  {
+    "id":"BC01.ENV.S4.001",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"ENVIRONMENTAL",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CONSTRUCTION"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["chantier","infrastructure","site","travaux"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"permits_or_environmental_impacts"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["permis","EIA","impact","inondation","zones humides","runoff"]}}
+      ]
+    },
+    "message":{
+      "title":"Environnement: impacts/permis non précisés",
+      "body":"Pour un projet de construction, le scope devrait mentionner impacts environnementaux et/ou permis requis (selon contexte)."
+    },
+    "sourceRefs":["SRC.EPA","SRC.ECCC"]
+  },
+
+  {
+    "id":"BC01.PRIVACY.S4.010",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["IT"],"subsector":["SAAS"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["SaaS","cloud","hébergement","tenant","données clients"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"data_residency_and_regions"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["résidence des données","data residency","région","Canada","US","EU","sous-traitant","processor"]}}
+      ]
+    },
+    "message":{
+      "title":"Souveraineté: résidence des données non précisée",
+      "body":"Pour un SaaS/cloud, précise la résidence des données (régions), et les sous-traitants/tiers impliqués."
+    },
+    "sourceRefs":["SRC.PIPEDA"]
+  },
+  {
+    "id":"BC01.PRIVACY.S5.010",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["IT"],"subsector":["SAAS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"privacy_constraints_and_transfers"}},
+        {"containsAny":{"path":"sections.S5.text","terms":["localisation","transfert transfrontalier","cross-border","PIPEDA","Loi 25","DPA"]}}
+      ]
+    },
+    "message":{
+      "title":"Privacy: contraintes de transfert/localisation manquantes",
+      "body":"Ajoute les contraintes de localisation/transfert des données (cross-border, contrats DPA, exigences clients/secteur)."
+    },
+    "sourceRefs":["SRC.PIPEDA","SRC.LOI25"]
+  },
+
+  {
+    "id":"BC01.SECURITY.S5.010",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["IT"],"subsector":["SAAS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"security_compliance_framework"}},
+        {"containsAny":{"path":"sections.S5.text","terms":["SOC 2","SOC2","ISO 27001","ISMS","contrôles de sécurité"]}}
+      ]
+    },
+    "message":{
+      "title":"Security: cadre de conformité sécurité absent",
+      "body":"Pour un SaaS, mentionne un cadre (SOC 2 / ISO 27001 ou équivalent) et contraintes associées."
+    },
+    "sourceRefs":["SRC.SOC2","SRC.ISO27001"]
+  },
+  {
+    "id":"BC01.SECURITY.S7.010",
+    "docType":"BC01",
+    "sectionId":"S7",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["IT"],"subsector":["SAAS"]}
+    },
+    "require":{
+      "all":[
+        {
+          "any":[
+            {"containsConcept":{"concept":"incident_response_plan"}},
+            {"containsAny":{"path":"sections.S7.text","terms":["incident response","réponse aux incidents","IRP"]}}
+          ]
+        },
+        {
+          "any":[
+            {"containsConcept":{"concept":"bcp_dr"}},
+            {"containsAny":{"path":"sections.S7.text","terms":["BCP","DR","disaster recovery","continuité","RTO","RPO"]}}
+          ]
+        }
+      ]
+    },
+    "message":{
+      "title":"Security: IRP/BCP-DR incomplets",
+      "body":"La solution SaaS devrait couvrir IRP + continuité (BCP/DR, RTO/RPO) et contrôles d’accès."
+    },
+    "sourceRefs":["SRC.SOC2"]
+  },
+  {
+    "id":"BC01.SECURITY.S12.010",
+    "docType":"BC01",
+    "sectionId":"S12",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["IT"],"subsector":["SAAS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"sla_and_operations_model"}},
+        {"containsAny":{"path":"sections.S12.text","terms":["SLA","OLA","uptime","support","monitoring","SRE","runbook"]}}
+      ]
+    },
+    "message":{
+      "title":"Ops/SLA: modèle opérationnel non décrit",
+      "body":"Décris les SLA (uptime), support, monitoring, et le modèle d’exploitation (runbooks, ownership)."
+    },
+    "sourceRefs":["SRC.SLA"]
+  },
+  {
+    "id":"BC01.SECURITY.S14.010",
+    "docType":"BC01",
+    "sectionId":"S14",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["IT"],"subsector":["SAAS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"security_governance_and_audits"}},
+        {"containsAny":{"path":"sections.S14.text","terms":["audit","revue de sécurité","risk review","vendor management","third-party"]}}
+      ]
+    },
+    "message":{
+      "title":"Gouvernance sécurité: audits/revues manquants",
+      "body":"Ajoute la gouvernance cyber (revues périodiques, audits, gestion des tiers)."
+    },
+    "sourceRefs":["SRC.SOC2"]
+  },
+
+  {
+    "id":"BC01.ENV.S8.020",
+    "docType":"BC01",
+    "sectionId":"S8",
+    "domain":"ENVIRONMENTAL",
+    "severity":"BLOCK",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CLEANTECH"],"subsector":["CARBON_CREDITS"]}},
+        {"containsAny":{"path":"sections.S8.text","terms":["crédit carbone","carbon credit","CO2","tCO2e","offset"]}}
+      ]
+    },
+    "require":{
+      "all":[
+        {
+          "any":[
+            {"containsConcept":{"concept":"mrv_methodology"}},
+            {"containsAny":{"path":"sections.S8.text","terms":["MRV","méthodologie","baseline","additionality","verification","audit"]}}
+          ]
+        },
+        {
+          "any":[
+            {"containsConcept":{"concept":"quantification_assumptions"}},
+            {"containsAny":{"path":"sections.S8.text","terms":["hypothèses","assumptions","périmètre","scope 1","scope 2","scope 3"]}}
+          ]
+        }
+      ]
+    },
+    "message":{
+      "title":"Carbone: bénéfices non vérifiables",
+      "body":"Si tu annonces des crédits/réductions CO2, tu dois inclure une méthodologie MRV (baseline, additionality, vérification) et les hypothèses."
+    },
+    "sourceRefs":["SRC.ISO14064","SRC.GHG_PROTOCOL"]
+  },
+  {
+    "id":"BC01.ENV.S11.020",
+    "docType":"BC01",
+    "sectionId":"S11",
+    "domain":"ENVIRONMENTAL",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CLEANTECH"]}},
+        {"containsAny":{"path":"sections.S8.text","terms":["ESG","crédit carbone","CO2","offset"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"greenwashing_and_compliance_risk"}},
+        {"containsAny":{"path":"sections.S11.text","terms":["greenwashing","réputation","conformité","audit","non-conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"Environnement: risques ESG non couverts",
+      "body":"Ajoute les risques (greenwashing, audit/verification, conformité reporting) et mesures d’atténuation."
+    },
+    "sourceRefs":["SRC.TCFD"]
+  },
+  {
+    "id":"BC01.ENV.S4.021",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"ENVIRONMENTAL",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CLEANTECH"],"subsector":["LIFECYCLE_PRODUCTS"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["cycle de vie","LCA","écoconception","empreinte","footprint"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"lca_boundaries_and_functional_unit"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["frontières","boundary","functional unit","cradle-to-grave","cradle-to-gate"]}}
+      ]
+    },
+    "message":{
+      "title":"LCA: périmètre non défini",
+      "body":"Si tu évoques un cycle de vie, précise le périmètre LCA (frontières, unité fonctionnelle) dans le scope."
+    },
+    "sourceRefs":["SRC.ISO14040"]
+  },
+  {
+    "id":"BC01.PUBLICPROC.S9.020",
+    "docType":"BC01",
+    "sectionId":"S9",
+    "domain":"PUBLIC_PROCUREMENT",
+    "severity":"BLOCK",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CLEANTECH"],"subsector":["PUBLIC_FUNDING"]}},
+        {"containsAny":{"path":"sections.S9.text","terms":["subvention","grant","fonds publics","incentive","rebate"]}}
+      ]
+    },
+    "require":{
+      "all":[
+        {
+          "any":[
+            {"containsConcept":{"concept":"grant_eligibility_and_conditions"}},
+            {"containsAny":{"path":"sections.S9.text","terms":["éligibilité","conditions","reporting","audit","deliverables","milestones"]}}
+          ]
+        },
+        {
+          "any":[
+            {"containsConcept":{"concept":"funding_compliance_budget_line"}},
+            {"containsAny":{"path":"sections.S9.text","terms":["conformité","compliance","audit cost","reporting cost"]}}
+          ]
+        }
+      ]
+    },
+    "message":{
+      "title":"Financement public: conformité non planifiée",
+      "body":"Si tu relies le projet à des subventions, ajoute conditions (éligibilité, reporting, audits, jalons) et coûts de conformité."
+    },
+    "sourceRefs":["SRC.PUBLIC_FUNDING"]
+  },
+  {
+    "id":"BC01.PUBLICPROC.S14.020",
+    "docType":"BC01",
+    "sectionId":"S14",
+    "domain":"PUBLIC_PROCUREMENT",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CLEANTECH"],"subsector":["PUBLIC_FUNDING"]}},
+        {"containsAny":{"path":"sections.S9.text","terms":["subvention","fonds publics","grant"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"funding_governance_and_audit_gates"}},
+        {"containsAny":{"path":"sections.S14.text","terms":["audit","preuve","evidence","gate","jalon","approbation","rapport"]}}
+      ]
+    },
+    "message":{
+      "title":"Gouvernance subventions: gates/audits manquants",
+      "body":"Ajoute une gouvernance liée aux subventions (gates, preuves, audits, responsabilités, cadence)."
+    },
+    "sourceRefs":["SRC.PUBLIC_FUNDING"]
+  },
+  {
+    "id":"BC01.ENV.S13.020",
+    "docType":"BC01",
+    "sectionId":"S13",
+    "domain":"ENVIRONMENTAL",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["CLEANTECH"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"esg_or_environmental_owner"}},
+        {"containsAny":{"path":"sections.S13.text","terms":["ESG","responsable environnement","sustainability","compliance"]}}
+      ]
+    },
+    "message":{
+      "title":"Environnement: rôle de responsabilité manquant",
+      "body":"Identifie un responsable ESG/environnement (ou conformité subventions) parmi les parties prenantes."
+    },
+    "sourceRefs":["SRC.TCFD"]
+  },
+
+  {
+    "id":"BC01.QUALITY.S7.030",
+    "docType":"BC01",
+    "sectionId":"S7",
+    "domain":"QUALITY_REG",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["MANUFACTURING"],"subsector":["AUTOMOTIVE","AEROSPACE"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["usine","manufacturing","production","ligne","assemblage"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"quality_management_process"}},
+        {"containsAny":{"path":"sections.S7.text","terms":["validation","traçabilité","audit trail","contrôle qualité","inspection","non-conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"Qualité: stratégie de contrôle/validation absente",
+      "body":"Pour un projet manufacturing, la solution devrait décrire la validation, la traçabilité et les contrôles qualité (inspection, gestion non-conformités)."
+    },
+    "sourceRefs":["SRC.IATF16949","SRC.AS9100"]
+  },
+  {
+    "id":"BC01.QUALITY.S11.030",
+    "docType":"BC01",
+    "sectionId":"S11",
+    "domain":"QUALITY_REG",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["MANUFACTURING"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"quality_and_recall_risk"}},
+        {"containsAny":{"path":"sections.S11.text","terms":["défaut","scrap","rework","rappel","qualité","non-conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"Qualité: risques non couverts",
+      "body":"Ajoute les risques qualité (défauts, non-conformités, rebut/rework, rappel si applicable) et leurs mitigations."
+    },
+    "sourceRefs":["SRC.IATF16949"]
+  },
+  {
+    "id":"BC01.QUALITY.S14.030",
+    "docType":"BC01",
+    "sectionId":"S14",
+    "domain":"QUALITY_REG",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["MANUFACTURING"],"subsector":["AEROSPACE","AUTOMOTIVE"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"quality_gates_and_signoff"}},
+        {"containsAny":{"path":"sections.S14.text","terms":["gate","sign-off","QA","audit","revue qualité","approbation"]}}
+      ]
+    },
+    "message":{
+      "title":"Gouvernance: gates qualité manquants",
+      "body":"Précise les gates/revues qualité (QA sign-off, audits) avant mise en production ou release."
+    },
+    "sourceRefs":["SRC.AS9100"]
+  },
+
+  {
+    "id":"BC01.CHEM.S4.030",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"SAFETY_HSE",
+    "severity":"BLOCK",
+    "when":{
+      "any":[
+        {"step1":{"industry":["CHEMICALS"],"subsector":["HAZMAT"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["hazmat","matières dangereuses","solvant","acide","toxique","corrosif"]}}
+      ]
+    },
+    "require":{
+      "all":[
+        {
+          "any":[
+            {"containsConcept":{"concept":"sds_fds_and_labels"}},
+            {"containsAny":{"path":"sections.S4.text","terms":["FDS","SDS","étiquetage","pictogramme"]}}
+          ]
+        },
+        {
+          "any":[
+            {"containsConcept":{"concept":"substances_and_handling_scope"}},
+            {"containsAny":{"path":"sections.S4.text","terms":["substances","volumes","stockage","transport","manutention"]}}
+          ]
+        }
+      ]
+    },
+    "message":{
+      "title":"HazMat: scope incomplet (sécurité)",
+      "body":"Un projet impliquant des matières dangereuses doit définir le périmètre (substances/volumes/manutention) et référencer SDS/FDS + exigences d’étiquetage."
+    },
+    "sourceRefs":["SRC.WHIMIS","SRC.REACH","SRC.TDG"]
+  },
+  {
+    "id":"BC01.CHEM.S5.030",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"SAFETY_HSE",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["CHEMICALS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"hazmat_controls_and_constraints"}},
+        {"containsAny":{"path":"sections.S5.text","terms":["PPE","EPI","ventilation","stockage","séparation","transport","déversement"]}}
+      ]
+    },
+    "message":{
+      "title":"HazMat: contraintes HSE manquantes",
+      "body":"Ajoute les contraintes/contrôles HSE (PPE/EPI, stockage, ventilation, transport, procédures déversement)."
+    },
+    "sourceRefs":["SRC.WHIMIS"]
+  },
+  {
+    "id":"BC01.CHEM.S11.030",
+    "docType":"BC01",
+    "sectionId":"S11",
+    "domain":"ENVIRONMENTAL",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["CHEMICALS"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"spill_exposure_environment_risk"}},
+        {"containsAny":{"path":"sections.S11.text","terms":["déversement","spill","exposition","incendie","sanctions","conformité"]}}
+      ]
+    },
+    "message":{
+      "title":"HazMat: risques HSE/Environnement non couverts",
+      "body":"Ajoute risques (déversement, exposition, incendie, non-conformité) + plan d’atténuation (urgence, confinement, formation)."
+    },
+    "sourceRefs":["SRC.EPA","SRC.ECCC"]
+  },
+
+  {
+    "id":"BC01.EDU.PRIVACY.S4.030",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "any":[
+        {"step1":{"industry":["EDUCATION"]}},
+        {"containsAny":{"path":"sections.S2.text","terms":["étudiant","student","mineur","classe","école","LMS"]}}
+      ]
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"student_data_types_and_access"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["données","notes","dossier","enregistrement","vidéo","accès par rôle"]}}
+      ]
+    },
+    "message":{
+      "title":"Éducation: périmètre données non précisé",
+      "body":"Décris les types de données (notes/dossiers/enregistrements), les accès par rôles et les utilisateurs (élèves/parents/personnel)."
+    },
+    "sourceRefs":["SRC.FERPA","SRC.FIPPA"]
+  },
+  {
+    "id":"BC01.EDU.PRIVACY.S5.030",
+    "docType":"BC01",
+    "sectionId":"S5",
+    "domain":"PRIVACY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["EDUCATION"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"consent_retention_third_parties"}},
+        {"containsAny":{"path":"sections.S5.text","terms":["consentement","rétention","retention","tiers","vendor","sous-traitant","partage"]}}
+      ]
+    },
+    "message":{
+      "title":"Éducation: contraintes privacy manquantes",
+      "body":"Ajoute consentement, rétention, règles de partage/tiers (vendors), et protection des mineurs si applicable."
+    },
+    "sourceRefs":["SRC.FIPPA"]
+  },
+  {
+    "id":"BC01.EDU.ACCESS.S4.030",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"ACCESSIBILITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["EDUCATION"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"accessibility_requirements"}},
+        {"containsAny":{"path":"sections.S4.text","terms":["WCAG","AODA","accessibilité","clavier","ARIA","contraste"]}}
+      ]
+    },
+    "message":{
+      "title":"Éducation: accessibilité non spécifiée",
+      "body":"Pour un service numérique éducatif, inclure des exigences d’accessibilité (WCAG/AODA ou équivalent)."
+    },
+    "sourceRefs":["SRC.WCAG","SRC.AODA"]
+  },
+
+  {
+    "id":"BC01.DEF.EXPORT.S4.030",
+    "docType":"BC01",
+    "sectionId":"S4",
+    "domain":"EXPORT_CONTROL",
+    "severity":"BLOCK",
+    "when":{
+      "step1":{"industry":["DEFENSE"],"subsector":["EXPORT_CONTROLLED"]}
+    },
+    "require":{
+      "all":[
+        {
+          "any":[
+            {"containsConcept":{"concept":"controlled_items_identification"}},
+            {"containsAny":{"path":"sections.S4.text","terms":["controlled","ITAR","EAR","export","classification","restricted"]}}
+          ]
+        },
+        {
+          "any":[
+            {"containsConcept":{"concept":"data_handling_and_access_controls"}},
+            {"containsAny":{"path":"sections.S4.text","terms":["accès","need-to-know","segmentation","enclave","clearance"]}}
+          ]
+        }
+      ]
+    },
+    "message":{
+      "title":"Défense: contrôle export / classification absents",
+      "body":"Le scope doit identifier les éléments/données contrôlés (classification) et les contrôles d’accès/manipulation associés."
+    },
+    "sourceRefs":["SRC.ITAR","SRC.EAR"]
+  },
+  {
+    "id":"BC01.DEF.SEC.S14.030",
+    "docType":"BC01",
+    "sectionId":"S14",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["DEFENSE"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"security_governance_and_roles"}},
+        {"containsAny":{"path":"sections.S14.text","terms":["security officer","responsable sécurité","audit","revue","incident"]}}
+      ]
+    },
+    "message":{
+      "title":"Défense: gouvernance sécurité manquante",
+      "body":"Ajoute la gouvernance sécurité (rôle Security Officer, audits/revues, gestion incidents et obligations de reporting)."
+    },
+    "sourceRefs":["SRC.NIST"]
+  },
+  {
+    "id":"BC01.DEF.SEC.S13.030",
+    "docType":"BC01",
+    "sectionId":"S13",
+    "domain":"SECURITY",
+    "severity":"WARN",
+    "when":{
+      "step1":{"industry":["DEFENSE"]}
+    },
+    "require":{
+      "any":[
+        {"containsConcept":{"concept":"export_control_officer_or_equivalent"}},
+        {"containsAny":{"path":"sections.S13.text","terms":["export control","compliance","security","clearance"]}}
+      ]
+    },
+    "message":{
+      "title":"Défense: rôles conformité/sécurité manquants",
+      "body":"Identifie les rôles (export control/compliance, sécurité, approbation) parmi les parties prenantes."
+    },
+    "sourceRefs":["SRC.ITAR"]
+  }
+]

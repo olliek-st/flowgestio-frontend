@@ -1,0 +1,491 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "source": "PMI PMBOK Guide 7th Edition",
+    "lastUpdated": "2026-01-23",
+    "description": "PMI concept mappings for BC-01 sections"
+  },
+  "sections": [
+    {
+      "sectionId": "S0",
+      "ref": "ES",
+      "title": "Executive Summary",
+      "pmiConcept": "Value Proposition (Synthèse de la valeur)",
+      "pmiPrinciples": ["PR-VALUE"],
+      "pmiDomains": [],
+      "description": "Strategic overview demonstrating value proposition"
+    },
+    {
+      "sectionId": "S1_1_1",
+      "ref": "1.1.1",
+      "title": "Organizational Overview",
+      "pmiConcept": "Systems Thinking (Interactions holistiques)",
+      "pmiPrinciples": ["PR-SYSTEMS"],
+      "pmiDomains": [],
+      "description": "Holistic view of organizational context and interactions"
+    },
+    {
+      "sectionId": "S1_1_2",
+      "ref": "1.1.2",
+      "title": "Business Need",
+      "pmiConcept": "Stewardship (Responsabilité envers les ressources)",
+      "pmiPrinciples": ["PR-STEWARD"],
+      "pmiDomains": [],
+      "description": "Responsible stewardship of organizational resources"
+    },
+    {
+      "sectionId": "S1_1_3",
+      "ref": "1.1.3",
+      "title": "Drivers for Change",
+      "pmiConcept": "Change Enablement (Facteurs de transition)",
+      "pmiPrinciples": ["PR-CHANGE"],
+      "pmiDomains": [],
+      "description": "Enabling organizational change and transition"
+    },
+    {
+      "sectionId": "S1_1_4",
+      "ref": "1.1.4",
+      "title": "Business Outcomes",
+      "pmiConcept": "Measurement (Résultats vs Métriques)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-MEASURE"],
+      "description": "Measurable results and performance metrics"
+    },
+    {
+      "sectionId": "S1_2",
+      "ref": "1.2",
+      "title": "Strategic Fit",
+      "pmiConcept": "Strategic Alignment (Objectifs stratégiques)",
+      "pmiPrinciples": ["PR-VALUE"],
+      "pmiDomains": [],
+      "description": "Alignment with strategic objectives and value creation"
+    },
+    {
+      "sectionId": "S1_3_1",
+      "ref": "1.3.1",
+      "title": "Problem/Opportunity Statement",
+      "pmiConcept": "Stakeholder Engagement (Besoins priorisés)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-STAKE"],
+      "description": "Engaging stakeholders to prioritize needs"
+    },
+    {
+      "sectionId": "S1_3_2",
+      "ref": "1.3.2",
+      "title": "Prioritized Requirements",
+      "pmiConcept": "Stakeholder Engagement (Besoins priorisés)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-STAKE"],
+      "description": "Stakeholder-driven requirement prioritization"
+    },
+    {
+      "sectionId": "S1_3_3",
+      "ref": "1.3.3",
+      "title": "Assumptions",
+      "pmiConcept": "Uncertainty (Hypothèses & Ambiguïté)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Managing uncertainty through explicit assumptions"
+    },
+    {
+      "sectionId": "S1_3_4",
+      "ref": "1.3.4",
+      "title": "Constraints",
+      "pmiConcept": "Uncertainty (Hypothèses & Ambiguïté)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Navigating constraints and ambiguity"
+    },
+    {
+      "sectionId": "S1_3_5",
+      "ref": "1.3.5",
+      "title": "Dependencies",
+      "pmiConcept": "Uncertainty (Hypothèses & Ambiguïté)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Managing dependencies and uncertainty"
+    },
+    {
+      "sectionId": "S1_4_1",
+      "ref": "1.4.1",
+      "title": "Boundaries",
+      "pmiConcept": "Project Work Domain (Limites du travail)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-WORK"],
+      "description": "Defining clear project work boundaries"
+    },
+    {
+      "sectionId": "S1_4_2",
+      "ref": "1.4.2",
+      "title": "Stakeholder Analysis",
+      "pmiConcept": "Stakeholder Engagement (Besoins priorisés)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-STAKE"],
+      "description": "Comprehensive stakeholder analysis and engagement"
+    },
+    {
+      "sectionId": "S2_1",
+      "ref": "2.1",
+      "title": "Evaluation Criteria",
+      "pmiConcept": "Quality Domain (Critères d'acceptation)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-QUALITY"],
+      "description": "Quality-driven acceptance criteria"
+    },
+    {
+      "sectionId": "S2_2_1",
+      "ref": "2.2.1",
+      "title": "The Status Quo",
+      "pmiConcept": "Baseline Value (Valeur sans projet)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-MEASURE"],
+      "description": "Establishing baseline value for comparison"
+    },
+    {
+      "sectionId": "S2_2_2",
+      "ref": "2.2.2",
+      "title": "Describing the Option",
+      "pmiConcept": "Tailoring (Adaptation des solutions)",
+      "pmiPrinciples": ["PR-TAILOR"],
+      "pmiDomains": [],
+      "description": "Tailoring solutions to context"
+    },
+    {
+      "sectionId": "S2_3",
+      "ref": "2.3",
+      "title": "Screening of Options",
+      "pmiConcept": "Tailoring (Adaptation des solutions)",
+      "pmiPrinciples": ["PR-TAILOR"],
+      "pmiDomains": [],
+      "description": "Adaptive screening and solution selection"
+    },
+    {
+      "sectionId": "S2_4",
+      "ref": "2.4",
+      "title": "Rationale for Discounted and Viable Options",
+      "pmiConcept": "Focus on Value (Cohérence des options)",
+      "pmiPrinciples": ["PR-VALUE"],
+      "pmiDomains": [],
+      "description": "Value-focused decision rationale"
+    },
+    {
+      "sectionId": "S3_1_1",
+      "ref": "3.1.1",
+      "title": "Strategic Alignment",
+      "pmiConcept": "Focus on Value (Cohérence des options)",
+      "pmiPrinciples": ["PR-VALUE"],
+      "pmiDomains": [],
+      "description": "Strategic value alignment"
+    },
+    {
+      "sectionId": "S3_1_2",
+      "ref": "3.1.2",
+      "title": "Alignment with Desired Business Outcomes",
+      "pmiConcept": "Focus on Value (Cohérence des options)",
+      "pmiPrinciples": ["PR-VALUE"],
+      "pmiDomains": [],
+      "description": "Outcome-focused value delivery"
+    },
+    {
+      "sectionId": "S3_2",
+      "ref": "3.2",
+      "title": "Costs",
+      "pmiConcept": "Planning Domain (Estimation du coût total)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-PLAN"],
+      "description": "Comprehensive cost planning and estimation"
+    },
+    {
+      "sectionId": "S3_3",
+      "ref": "3.3",
+      "title": "Cost-Benefit Analysis",
+      "pmiConcept": "Value Delivery (Rentabilité de l'investissement)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-DELIVERY"],
+      "description": "Value delivery through cost-benefit optimization"
+    },
+    {
+      "sectionId": "S3_4_1",
+      "ref": "3.4.1",
+      "title": "Contracting and Procurement",
+      "pmiConcept": "Resource Management (Capacité à livrer)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-WORK"],
+      "description": "Resource management for delivery capacity"
+    },
+    {
+      "sectionId": "S3_4_2",
+      "ref": "3.4.2",
+      "title": "Schedule and Approach",
+      "pmiConcept": "Resource Management (Capacité à livrer)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-WORK"],
+      "description": "Scheduling and resource allocation"
+    },
+    {
+      "sectionId": "S3_4_3",
+      "ref": "3.4.3",
+      "title": "Impact",
+      "pmiConcept": "Resource Management (Capacité à livrer)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-WORK"],
+      "description": "Impact assessment on organizational capacity"
+    },
+    {
+      "sectionId": "S3_4_4",
+      "ref": "3.4.4",
+      "title": "Capacity",
+      "pmiConcept": "Resource Management (Capacité à livrer)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-WORK"],
+      "description": "Organizational delivery capacity"
+    },
+    {
+      "sectionId": "S3_5_1",
+      "ref": "3.5.1",
+      "title": "Option Risk Summary",
+      "pmiConcept": "Uncertainty & Risk (Proactivité vs Réaction)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Proactive risk management approach"
+    },
+    {
+      "sectionId": "S3_5_2",
+      "ref": "3.5.2",
+      "title": "Risk Register",
+      "pmiConcept": "Uncertainty & Risk (Proactivité vs Réaction)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Comprehensive uncertainty and risk management"
+    },
+    {
+      "sectionId": "S3_6",
+      "ref": "3.6",
+      "title": "Benchmark",
+      "pmiConcept": "Quality Domain (Critères d'acceptation)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-QUALITY"],
+      "description": "Quality benchmarking and standards"
+    },
+    {
+      "sectionId": "S3_7",
+      "ref": "3.7",
+      "title": "Policy and Standard Considerations",
+      "pmiConcept": "Stewardship & Leadership (Responsabilisation)",
+      "pmiPrinciples": ["PR-LEAD"],
+      "pmiDomains": [],
+      "description": "Leadership in stewardship and compliance"
+    },
+    {
+      "sectionId": "S3_8",
+      "ref": "3.8",
+      "title": "Advantages and Disadvantages",
+      "pmiConcept": "Complexity (Justification du choix)",
+      "pmiPrinciples": ["PR-COMPLEX"],
+      "pmiDomains": [],
+      "description": "Navigating complexity in decision-making"
+    },
+    {
+      "sectionId": "S4_1",
+      "ref": "4.1",
+      "title": "Comparison Summary",
+      "pmiConcept": "Complexity (Justification du choix)",
+      "pmiPrinciples": ["PR-COMPLEX"],
+      "pmiDomains": [],
+      "description": "Complex decision justification"
+    },
+    {
+      "sectionId": "S4_2_1",
+      "ref": "4.2.1",
+      "title": "Recommendation",
+      "pmiConcept": "Complexity (Justification du choix)",
+      "pmiPrinciples": ["PR-COMPLEX"],
+      "pmiDomains": [],
+      "description": "Clear recommendation through complexity"
+    },
+    {
+      "sectionId": "S4_2_2",
+      "ref": "4.2.2",
+      "title": "Deciding Factors",
+      "pmiConcept": "Complexity (Justification du choix)",
+      "pmiPrinciples": ["PR-COMPLEX"],
+      "pmiDomains": [],
+      "description": "Key decision factors in complex environment"
+    },
+    {
+      "sectionId": "S4_2_3",
+      "ref": "4.2.3",
+      "title": "Costs",
+      "pmiConcept": "Planning Domain (Estimation du coût total)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-PLAN"],
+      "description": "Detailed cost planning for preferred option"
+    },
+    {
+      "sectionId": "S4_2_4",
+      "ref": "4.2.4",
+      "title": "Risks",
+      "pmiConcept": "Uncertainty & Risk (Proactivité vs Réaction)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Risk profile and management strategy"
+    },
+    {
+      "sectionId": "S4_2_5",
+      "ref": "4.2.5",
+      "title": "Implementation Plan",
+      "pmiConcept": "Value Delivery (Rentabilité de l'investissement)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-DELIVERY"],
+      "description": "Value-focused implementation approach"
+    },
+    {
+      "sectionId": "S5_1",
+      "ref": "5.1",
+      "title": "Governance and Oversight",
+      "pmiConcept": "Stewardship & Leadership (Responsabilisation)",
+      "pmiPrinciples": ["PR-LEAD"],
+      "pmiDomains": [],
+      "description": "Leadership and stewardship in governance"
+    },
+    {
+      "sectionId": "S5_2_1",
+      "ref": "5.2.1",
+      "title": "Project Review Strategy",
+      "pmiConcept": "Development Approach (Agile/Cascade/Hybride)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-DEV"],
+      "description": "Adaptive development approach and review"
+    },
+    {
+      "sectionId": "S5_3",
+      "ref": "5.3",
+      "title": "Outcome Management Strategy",
+      "pmiConcept": "Value Realization (Livrer des bénéfices)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-DELIVERY"],
+      "description": "Benefit realization and value delivery"
+    },
+    {
+      "sectionId": "S5_4",
+      "ref": "5.4",
+      "title": "Risk Management Strategy",
+      "pmiConcept": "Uncertainty & Risk (Proactivité vs Réaction)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-UNCERT"],
+      "description": "Ongoing risk and uncertainty management"
+    },
+    {
+      "sectionId": "S5_5",
+      "ref": "5.5",
+      "title": "Change Management Strategy",
+      "pmiConcept": "Adaptability & Resilience (Gestion de l'humain)",
+      "pmiPrinciples": ["PR-ADAPT"],
+      "pmiDomains": [],
+      "description": "Adaptive and resilient change management"
+    },
+    {
+      "sectionId": "S5_6",
+      "ref": "5.6",
+      "title": "Performance Measurement Strategy",
+      "pmiConcept": "Measurement (Résultats vs Métriques)",
+      "pmiPrinciples": [],
+      "pmiDomains": ["PD-MEASURE"],
+      "description": "Performance measurement and metrics"
+    }
+  ],
+  "pmiPrinciples": {
+    "PR-VALUE": {
+      "name": "Focus on Value",
+      "nameF": "Focus on Value (Cohérence des options)",
+      "description": "Projects exist to create value for stakeholders and deliver outcomes that drive organizational success."
+    },
+    "PR-STEWARD": {
+      "name": "Stewardship",
+      "nameF": "Stewardship (Responsabilité envers les ressources)",
+      "description": "Responsible stewardship of resources including financial, human, environmental and social capital."
+    },
+    "PR-SYSTEMS": {
+      "name": "Systems Thinking",
+      "nameF": "Systems Thinking (Interactions holistiques)",
+      "description": "Understanding the relationships and interactions between components of a project and its environment."
+    },
+    "PR-CHANGE": {
+      "name": "Change Enablement",
+      "nameF": "Change Enablement (Facteurs de transition)",
+      "description": "Preparing people for change and helping them navigate the transition successfully."
+    },
+    "PR-TAILOR": {
+      "name": "Tailoring",
+      "nameF": "Tailoring (Adaptation des solutions)",
+      "description": "Adapt the approach to suit the unique context of each project."
+    },
+    "PR-QUALITY": {
+      "name": "Quality",
+      "nameF": "Quality Domain (Critères d'acceptation)",
+      "description": "Maintain an appropriate focus on quality throughout the project life cycle."
+    },
+    "PR-COMPLEX": {
+      "name": "Complexity",
+      "nameF": "Complexity (Justification du choix)",
+      "description": "Navigate complexity through appropriate approaches and mindsets."
+    },
+    "PR-LEAD": {
+      "name": "Leadership",
+      "nameF": "Stewardship & Leadership (Responsabilisation)",
+      "description": "Demonstrate leadership behaviors to drive positive outcomes."
+    },
+    "PR-ADAPT": {
+      "name": "Adaptability",
+      "nameF": "Adaptability & Resilience (Gestion de l'humain)",
+      "description": "Build adaptability and resilience into project approaches."
+    }
+  },
+  "pmiDomains": {
+    "PD-STAKE": {
+      "name": "Stakeholder Performance Domain",
+      "nameF": "Stakeholder Engagement (Besoins priorisés)",
+      "description": "Activities related to stakeholders throughout the project."
+    },
+    "PD-TEAM": {
+      "name": "Team Performance Domain",
+      "nameF": "Team Performance Domain",
+      "description": "Activities related to the people responsible for producing project deliverables."
+    },
+    "PD-DEV": {
+      "name": "Development Approach & Life Cycle Performance Domain",
+      "nameF": "Development Approach (Agile/Cascade/Hybride)",
+      "description": "Activities related to the development approach, cadence, and life cycle phases."
+    },
+    "PD-PLAN": {
+      "name": "Planning Performance Domain",
+      "nameF": "Planning Domain (Estimation du coût total)",
+      "description": "Activities related to organization and orchestration necessary for delivering project outcomes."
+    },
+    "PD-WORK": {
+      "name": "Project Work Performance Domain",
+      "nameF": "Project Work Domain (Limites du travail)",
+      "description": "Activities related to establishing project processes and performing the work."
+    },
+    "PD-DELIVERY": {
+      "name": "Delivery Performance Domain",
+      "nameF": "Value Delivery (Rentabilité de l'investissement)",
+      "description": "Activities associated with delivering the scope and quality that the project was undertaken to achieve."
+    },
+    "PD-MEASURE": {
+      "name": "Measurement Performance Domain",
+      "nameF": "Measurement (Résultats vs Métriques)",
+      "description": "Activities related to assessing project performance and taking appropriate actions."
+    },
+    "PD-UNCERT": {
+      "name": "Uncertainty Performance Domain",
+      "nameF": "Uncertainty & Risk (Proactivité vs Réaction)",
+      "description": "Activities related to risk and uncertainty throughout the project."
+    },
+    "PD-QUALITY": {
+      "name": "Quality Performance Domain",
+      "nameF": "Quality Domain (Critères d'acceptation)",
+      "description": "Activities focused on meeting quality expectations and achieving quality outcomes."
+    }
+  }
+}
