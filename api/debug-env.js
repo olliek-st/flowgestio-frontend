@@ -1,15 +1,14 @@
-// api/debug-env.js
-// Minimal endpoint to check whether env is loaded.
-// Explicitly load .env.local (Windows sometimes needs this in dev).
+// Retired legacy endpoint (FG-LEGACY-API-EXPOSURE-01).
+// Deterministic HTTP 410 for every request method. No provider calls,
+// no environment or secret reads, no imports.
+const BODY = JSON.stringify({
+  error: "LEGACY_ENDPOINT_RETIRED",
+  message: "This historical endpoint has been retired.",
+});
 
-import { config as loadEnv } from "dotenv";
-loadEnv({ path: ".env.local" });  // load local secrets
-loadEnv();                        // also load .env if present
-
-export default async function handler(req, res) {
+export default function handler(req, res) {
+  res.statusCode = 410;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  return res.status(200).json({
-    has_PERPLEXITY_API_KEY: Boolean(process.env.PERPLEXITY_API_KEY),
-    node: process.version,
-  });
+  res.setHeader("Cache-Control", "no-store");
+  res.end(BODY);
 }
